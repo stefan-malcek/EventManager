@@ -1,25 +1,20 @@
 ﻿using EventManager.DAL.Enums;
 using Riganti.Utils.Infrastructure.Core;
-using System;
+using Riganti.Utils.Infrastructure.EntityFramework;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 
 namespace EventManager.DAL.Entities
 {
     public class User : IEntity<int>
     {
         public int ID { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public UserType Type { get; set; }
-        public DateTime Birthday { get; set; }
+        [Required]
+        [Range(0, 2)]
+        public UserRole Role { get; set; }
+        //[Required] for now is not required - testing db layer
+        public virtual UserAccount Account { get; set; }
+        public virtual List<Event> Events { get; set; }
         public virtual List<Registration> Registrations { get; set; }
-
-        public override string ToString()
-        {
-            return $"FirstName: {FirstName}, LastName: {LastName}, Type: {Type}, Birthday: {Birthday}";
-        }
     }
 }

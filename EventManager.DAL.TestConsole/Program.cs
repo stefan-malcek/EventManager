@@ -1,10 +1,6 @@
 ﻿using EventManager.DAL.Entities;
-using EventManager.DAL.Enums;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EventManager.DAL.TestConsole
 {
@@ -14,12 +10,13 @@ namespace EventManager.DAL.TestConsole
         {
             using (var context = new EventManagerDbContext())
             {
-                context.Users.Add(new User
+                context.Addresses.Add(new Address
                 {
-                    FirstName = "Štefan",
-                    LastName = "Malček",
-                    Birthday = DateTime.Now,
-                    Type = UserType.Administrator,
+                    Street = "Vodova",
+                    StreetNumber = "81",
+                    City = "Brno",
+                    ZipCode = 61200,
+                    State = "Česká republika"
                 });
 
                 context.SaveChanges();
@@ -27,10 +24,36 @@ namespace EventManager.DAL.TestConsole
 
             using (var context = new EventManagerDbContext())
             {
-                foreach (var user in context.Users)
+                foreach (var address in context.Addresses)
                 {
-                    Console.WriteLine(user);
+                    Console.WriteLine(address);
                 }
+            }
+
+            using (var context = new EventManagerDbContext())
+            {
+                foreach (var pEvent in context.Events)
+                {
+                    Console.WriteLine(pEvent);
+                }
+            }
+
+            using (var context = new EventManagerDbContext())
+            {
+                var review = new EventReview
+                {
+                    Event = context.Events.First(),
+                    Rating = 5
+                };
+
+                context.EventReviews.Add(review);
+                context.SaveChanges();
+            }
+
+            using (var context = new EventManagerDbContext())
+            {
+                //context.Events.Remove(context.Events.First());
+                //context.SaveChanges();
             }
 
             Console.ReadKey();
