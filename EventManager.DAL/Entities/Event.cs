@@ -3,10 +3,12 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using EventManager.DAL.Validation;
 
 namespace EventManager.DAL.Entities
 {
+    /// <summary>
+    /// Event definition.
+    /// </summary>
     public class Event : IEntity<int>
     {
         public int ID { get; set; }
@@ -15,6 +17,9 @@ namespace EventManager.DAL.Entities
         public string Title { get; set; }
         [MaxLength(65536)]
         public string Description { get; set; }
+        [Required]
+        [MaxLength(128)]
+        public string Lecturer { get; set; }
         [Required]
         public DateTime Date { get; set; }
         [Required]
@@ -26,16 +31,15 @@ namespace EventManager.DAL.Entities
         public int? Capacity { get; set; }
         public int? Fee { get; set; }
         [Required]
-        [Organizer]
-        public virtual User Organizer { get; set; }
-        [Required]
         public virtual Address Address { get; set; }
-        public virtual List<Registration> Registrations { get; set; }
+        [Required]
+        public virtual EventOrganizer EventOrganizer { get; set; }
         public virtual List<EventReview> EventReviews { get; set; }
+        public virtual List<Registration> Registrations { get; set; }
 
         public override string ToString()
         {
-            return $"ID: {ID}, Title: {Title}, Description: {Description}, Date: {Date}, Start: {Start}, End: {End}, Duration: {Duration}, Capacity: {Capacity}";
+            return $"ID: {ID}, Title: {Title}, Description: {Description}, Lecturer: {Lecturer}, Date: {Date}, Start: {Start}, End: {End}, Duration: {Duration}, Capacity: {Capacity}, Fee: {Fee}";
         }
     }
 }

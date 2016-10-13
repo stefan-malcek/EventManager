@@ -8,15 +8,16 @@ namespace EventManager.DAL.TestConsole
     {
         static void Main(string[] args)
         {
+            Console.WriteLine("\nAdd");
+
             using (var context = new EventManagerDbContext())
             {
                 context.Addresses.Add(new Address
                 {
-                    Street = "Vodova",
-                    StreetNumber = "81",
-                    City = "Brno",
-                    ZipCode = 61200,
-                    State = "Česká republika"
+                    Building = "BB centrum, budova Delta(kinosál Praha)",
+                    Street = "Vyskočilova",
+                    StreetNumber = "1561 / 4a",
+                    City = "Praha 4"
                 });
 
                 context.SaveChanges();
@@ -30,30 +31,47 @@ namespace EventManager.DAL.TestConsole
                 }
             }
 
+            Console.WriteLine("\nUpdate");
+
             using (var context = new EventManagerDbContext())
             {
-                foreach (var pEvent in context.Events)
+                var address = context.Addresses.FirstOrDefault();
+
+                if (address != null)
                 {
-                    Console.WriteLine(pEvent);
+                    address.Building = "Fakulta informatiky Masarykovy univerzity (A318)";
+                    address.Street = "Botanická";
+                    address.StreetNumber = "68a";
+                    address.City = "Brno";
+
+                    context.SaveChanges();
+                }
+            }  
+
+            using (var context = new EventManagerDbContext())
+            {
+                foreach (var address in context.Addresses)
+                {
+                    Console.WriteLine(address);
                 }
             }
 
+            Console.WriteLine("\nDelete");
+
             using (var context = new EventManagerDbContext())
             {
-                var review = new EventReview
-                {
-                    Event = context.Events.First(),
-                    Rating = 5
-                };
+                var address = context.Addresses.FirstOrDefault();
 
-                context.EventReviews.Add(review);
+                context.Addresses.Remove(address);
                 context.SaveChanges();
             }
 
             using (var context = new EventManagerDbContext())
             {
-                //context.Events.Remove(context.Events.First());
-                //context.SaveChanges();
+                foreach (var address in context.Addresses)
+                {
+                    Console.WriteLine(address);
+                }
             }
 
             Console.ReadKey();
