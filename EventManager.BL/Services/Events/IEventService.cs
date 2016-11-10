@@ -21,6 +21,6 @@ namespace EventManager.BL.Services.Events
 
         EventDTO GetEvent(int eventId);
 
-        PagedListResultDTO<EventDTO> ListEvents(EventFilter filter, int page = 1);
+        EventPagedListResultDTO ListEvents(EventFilter filter, int page = 1);
     }
 }

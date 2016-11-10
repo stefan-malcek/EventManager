@@ -85,7 +85,7 @@ namespace EventManager.BL.Services.Events
             }
         }
 
-        public PagedListResultDTO<EventDTO> ListEvents(EventFilter filter, int page = 1)
+        public EventPagedListResultDTO ListEvents(EventFilter filter, int page = 1)
         {
             using (UnitOfWorkProvider.Create())
             {
