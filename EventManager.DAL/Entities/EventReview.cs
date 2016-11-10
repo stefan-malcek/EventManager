@@ -16,6 +16,9 @@ namespace EventManager.DAL.Entities
         [MaxLength(128)]
         public string Author { get; set; } = "Anonym";
         [Required]
+        [MaxLength(65536)]
+        public string Review { get; set; }
+        [Required]
         public virtual Event Event { get; set; }
 
         public override string ToString()

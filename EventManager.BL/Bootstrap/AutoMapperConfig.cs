@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using EventManager.BL.DTOs;
+using EventManager.DAL.Entities;
 
 namespace EventManager.BL.Bootstrap
 {
@@ -6,9 +8,11 @@ namespace EventManager.BL.Bootstrap
     {
         public static void Initialize()
         {
-            Mapper.Initialize(i =>
+            Mapper.Initialize(config =>
             {
-                //TODO insert mapping configuration
+                config.CreateMap<Address, AddressDTO>().ReverseMap();
+
+                config.CreateMap<User, UserDTO>().ReverseMap();
             });
         }
     }
