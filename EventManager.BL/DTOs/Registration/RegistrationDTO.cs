@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 using EventManager.DAL.Enums;
 
-namespace EventManager.BL.DTOs
+namespace EventManager.BL.DTOs.Registration
 {
-   public  class RegistrationCreate
+    public class RegistrationDTO
     {
+        public int Id { get; set; }
         [Required]
         public RegistrationState State { get; set; }
         [Required]

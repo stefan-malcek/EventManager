@@ -88,9 +88,9 @@
     <Compile Include="DTOs\Filters\RegistrationFilter.cs" />
     <Compile Include="DTOs\Filters\UserFilter.cs" />
     <Compile Include="DTOs\PagedListResultDTO.cs" />
-    <Compile Include="DTOs\RegistrationCreate.cs" />
-    <Compile Include="DTOs\RegistrationDTO.cs" />
-    <Compile Include="DTOs\RegistrationUpdateDTO.cs" />
+    <Compile Include="DTOs\Registration\RegistrationCreateDTO.cs" />
+    <Compile Include="DTOs\Registration\RegistrationDTO.cs" />
+    <Compile Include="DTOs\Registration\RegistrationUpdateDTO.cs" />
     <Compile Include="DTOs\UserDTO.cs" />
     <Compile Include="Miscellaneous\EventSortCriteria.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -111,6 +111,7 @@
     <Compile Include="Services\Events\EventService.cs" />
     <Compile Include="Services\Events\IEventService.cs" />
     <Compile Include="Services\Registrations\IRegistrationService.cs" />
+    <Compile Include="Services\Registrations\RegistrationService.cs" />
     <Compile Include="Services\Reviews\IReviewService.cs" />
     <Compile Include="Services\Reviews\ReviewService.cs" />
     <Compile Include="Services\Users\IUserService.cs" />

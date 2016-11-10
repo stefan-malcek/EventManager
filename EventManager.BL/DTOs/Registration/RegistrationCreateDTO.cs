@@ -1,11 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using EventManager.DAL.Enums;
 
-namespace EventManager.BL.DTOs
+namespace EventManager.BL.DTOs.Registration
 {
-    public class RegistrationDTO
+   public  class RegistrationCreateDTO
     {
-        public int Id { get; set; }
         [Required]
         public RegistrationState State { get; set; }
         [Required]

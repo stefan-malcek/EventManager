@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using EventManager.BL.DTOs;
+using EventManager.BL.DTOs.Filters;
+using EventManager.BL.DTOs.Registration;
 
 namespace EventManager.BL.Services.Registrations
 {
@@ -14,6 +16,5 @@ namespace EventManager.BL.Services.Registrations
         void DeleteRegistration(int registrationId);
         //TODO nieco ze registracia je v queuee
         IEnumerable<RegistrationDTO> ListRegistrations(RegistrationFilter filter);
-
     }
 }
