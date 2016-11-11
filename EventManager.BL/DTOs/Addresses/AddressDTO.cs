@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace EventManager.BL.DTOs
+namespace EventManager.BL.DTOs.Addresses
 {
     public class AddressDTO
     {

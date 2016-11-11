@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using EventManager.BL.DTOs;
-using EventManager.BL.DTOs.Event;
+using EventManager.BL.DTOs.Events;
 using EventManager.BL.DTOs.Filters;
 using EventManager.BL.Queries;
 using EventManager.BL.Repositories;

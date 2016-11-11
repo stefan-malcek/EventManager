@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Castle.Windsor;
 using EventManager.BL.Bootstrap;
 using EventManager.BL.DTOs;
+using EventManager.BL.DTOs.Addresses;
 using EventManager.BL.DTOs.Filters;
 using EventManager.BL.Services.Addresses;
 

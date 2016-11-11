@@ -7,7 +7,7 @@ namespace EventManager.BL.DTOs
     {
         public int Id { get; set; }
         [Required]
-        public int EventId { get; set; } //maybe
+        public int EventId { get; set; }
         [Required]
         [Organizer]
         public int UserId { get; set; }

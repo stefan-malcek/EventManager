@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using AutoMapper.QueryableExtensions;
 using EventManager.BL.AppEfConfiguration;
 using EventManager.BL.DTOs;
-using EventManager.BL.DTOs.EventReview;
+using EventManager.BL.DTOs.EventReviews;
 using EventManager.BL.DTOs.Filters;
 using EventManager.DAL.Entities;
 using Riganti.Utils.Infrastructure.Core;

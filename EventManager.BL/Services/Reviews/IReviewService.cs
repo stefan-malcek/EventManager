@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using EventManager.BL.DTOs.EventReview;
+using EventManager.BL.DTOs.EventReviews;
 
 namespace EventManager.BL.Services.Reviews
 {

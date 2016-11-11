@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
-using EventManager.BL.DTOs.EventReview;
+using EventManager.BL.DTOs.EventReviews;
 using EventManager.BL.DTOs.Filters;
 using EventManager.BL.Queries;
 using EventManager.BL.Repositories;

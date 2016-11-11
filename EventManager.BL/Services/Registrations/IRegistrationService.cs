@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using EventManager.BL.DTOs;
 using EventManager.BL.DTOs.Filters;
-using EventManager.BL.DTOs.Registration;
+using EventManager.BL.DTOs.Registrations;
 
 namespace EventManager.BL.Services.Registrations
 {

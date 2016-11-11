@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace EventManager.BL.DTOs.EventReview
+namespace EventManager.BL.DTOs.EventReviews
 {
     public class EventReviewCreateDTO
     {

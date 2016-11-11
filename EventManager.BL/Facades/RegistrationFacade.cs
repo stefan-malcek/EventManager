@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using EventManager.BL.DTOs.Filters;
-using EventManager.BL.DTOs.Registration;
+using EventManager.BL.DTOs.Registrations;
 using EventManager.BL.Services.Registrations;
 
 namespace EventManager.BL.Facades

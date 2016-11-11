@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using EventManager.BL.DTOs;
+using EventManager.BL.DTOs.Addresses;
 using EventManager.BL.DTOs.Filters;
 using EventManager.BL.Queries;
 using EventManager.BL.Repositories;
@@ -23,12 +24,11 @@ namespace EventManager.BL.Services.Addresses
             _addressRepository = addressRepository;
         }
 
-        public void CreateAddress(AddressDTO addressDto)
+        public void CreateAddress(AddressCreateDTO addressDto)
         {
             using (var uow = UnitOfWorkProvider.Create())
             {
                 var address = Mapper.Map<Address>(addressDto);
-
                 _addressRepository.Insert(address);
                 uow.Commit();
             }
@@ -40,7 +40,6 @@ namespace EventManager.BL.Services.Addresses
             {
                 var address = _addressRepository.GetById(addressDto.Id);
                 Mapper.Map(addressDto, address);
-
                 _addressRepository.Update(address);
                 uow.Commit();
             }

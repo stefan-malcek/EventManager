@@ -4,8 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using EventManager.BL.DTOs;
-using EventManager.BL.DTOs.Event;
-using EventManager.BL.DTOs.EventReview;
+using EventManager.BL.DTOs.Addresses;
+using EventManager.BL.DTOs.EventReviews;
+using EventManager.BL.DTOs.Events;
 using EventManager.BL.DTOs.Filters;
 using EventManager.BL.Services.Addresses;
 using EventManager.BL.Services.Events;
@@ -26,7 +27,8 @@ namespace EventManager.BL.Facades
             _reviewService = reviewService;
         }
 
-        public void CreateAddress(AddressDTO addressDto)
+        #region Address functionality
+        public void CreateAddress(AddressCreateDTO addressDto)
         {
             _addressService.CreateAddress(addressDto);
         }
@@ -41,10 +43,16 @@ namespace EventManager.BL.Facades
             _addressService.DeleteAddress(addressId);
         }
 
+        public AddressDTO GetAddress(int addressId)
+        {
+            return _addressService.GetAddress(addressId);
+        }
+
         public IEnumerable<AddressDTO> ListAddresses(AddressFilter filter)
         {
             return _addressService.ListAddresses(filter);
         }
+        #endregion
 
         public void CreateEvent(EventDTO eventDto)
         {
@@ -84,6 +92,6 @@ namespace EventManager.BL.Facades
         public IEnumerable<EventReviewDTO> ListReviewsForEvent(int eventId)
         {
             return _reviewService.ListReviewsForEvent(eventId);
-        } 
+        }
     }
 }

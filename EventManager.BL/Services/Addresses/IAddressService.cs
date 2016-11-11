@@ -4,13 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using EventManager.BL.DTOs;
+using EventManager.BL.DTOs.Addresses;
 using EventManager.BL.DTOs.Filters;
 
 namespace EventManager.BL.Services.Addresses
 {
     public interface IAddressService
     {
-        void CreateAddress(AddressDTO addressDto);
+        void CreateAddress(AddressCreateDTO addressDto);
 
         void UpdateAddress(AddressDTO addressDto);
 

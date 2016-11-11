@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace EventManager.BL.DTOs.Event
+namespace EventManager.BL.DTOs.Events
 {
     public class EventDTO
     {
