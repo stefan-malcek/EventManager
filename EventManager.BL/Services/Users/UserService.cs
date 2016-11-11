@@ -5,7 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using EventManager.BL.DTOs;
+using EventManager.BL.DTOs.Events;
 using EventManager.BL.DTOs.Filters;
+using EventManager.BL.DTOs.Users;
 using EventManager.BL.Queries;
 using EventManager.BL.Repositories;
 using EventManager.DAL.Entities;
@@ -23,12 +25,11 @@ namespace EventManager.BL.Services.Users
             _userListQuery = userListQuery;
         }
 
-        public void CreateUser(UserDTO userDto)
+        public void CreateUser(UserCreateDTO userDto)
         {
             using (var uow = UnitOfWorkProvider.Create())
             {
                 var user = Mapper.Map<User>(userDto);
-
                 _userRepository.Insert(user);
                 uow.Commit();
             }
@@ -60,9 +61,13 @@ namespace EventManager.BL.Services.Users
             using (UnitOfWorkProvider.Create())
             {
                 var user = _userRepository.GetById(userId);
-
                 return user == null ? null : Mapper.Map<UserDTO>(user);
             }
+        }
+
+        public UserDTO GetUserAccortingToEmail(string email)
+        {
+            throw new NotImplementedException("Functionality will be implemented with authentication.");
         }
 
         public IEnumerable<UserDTO> ListUsers(UserFilter filter)

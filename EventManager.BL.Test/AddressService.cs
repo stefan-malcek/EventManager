@@ -85,7 +85,7 @@ namespace EventManager.BL.Test
 
         private void InsertTestAddress()
         {
-            _addressService.CreateAddress(new AddressDTO
+            _addressService.CreateAddress(new AddressCreateDTO
             {
                 Building = "TestBuilding",
                 Street = "TestStreet",

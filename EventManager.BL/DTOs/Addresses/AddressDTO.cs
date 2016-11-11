@@ -4,7 +4,8 @@ namespace EventManager.BL.DTOs.Addresses
 {
     public class AddressDTO
     {
-        public int Id{ get; set; }
+        [Required]
+        public int Id { get; set; }
         [Required]
         [MaxLength(512)]
         public string Building { get; set; }

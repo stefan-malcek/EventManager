@@ -92,7 +92,8 @@
     <Compile Include="DTOs\Registrations\RegistrationCreateDTO.cs" />
     <Compile Include="DTOs\Registrations\RegistrationDTO.cs" />
     <Compile Include="DTOs\Registrations\RegistrationUpdateDTO.cs" />
-    <Compile Include="DTOs\UserDTO.cs" />
+    <Compile Include="DTOs\Users\UserCreateDTO.cs" />
+    <Compile Include="DTOs\Users\UserDTO.cs" />
     <Compile Include="Facades\EventFacade.cs" />
     <Compile Include="Facades\RegistrationFacade.cs" />
     <Compile Include="Facades\UserFacade.cs" />

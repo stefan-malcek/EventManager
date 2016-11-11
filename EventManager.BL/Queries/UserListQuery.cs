@@ -7,6 +7,7 @@ using AutoMapper.QueryableExtensions;
 using EventManager.BL.AppEfConfiguration;
 using EventManager.BL.DTOs;
 using EventManager.BL.DTOs.Filters;
+using EventManager.BL.DTOs.Users;
 using EventManager.DAL.Entities;
 using Riganti.Utils.Infrastructure.Core;
 

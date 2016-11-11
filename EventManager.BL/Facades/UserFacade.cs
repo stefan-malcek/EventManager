@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using EventManager.BL.DTOs;
 using EventManager.BL.DTOs.Filters;
+using EventManager.BL.DTOs.Users;
 using EventManager.BL.Services.Users;
 
 namespace EventManager.BL.Facades
@@ -18,7 +19,7 @@ namespace EventManager.BL.Facades
             _userService = userService;
         }
 
-        public void CreateUser(UserDTO userDto)
+        public void CreateUser(UserCreateDTO userDto)
         {
             _userService.CreateUser(userDto);
         }
@@ -31,6 +32,16 @@ namespace EventManager.BL.Facades
         public void DeleteUser(int userId)
         {
             _userService.DeleteUser(userId);
+        }
+
+        public UserDTO GetUser(int userId)
+        {
+            return _userService.GetUser(userId);
+        }
+
+        public UserDTO GetUserAccordingToMail(string mail)
+        {
+            return _userService.GetUserAccortingToEmail(mail);
         }
 
         public IEnumerable<UserDTO> ListUsers(UserFilter filter)

@@ -2,10 +2,11 @@
 using System.ComponentModel.DataAnnotations;
 using EventManager.DAL.Enums;
 
-namespace EventManager.BL.DTOs
+namespace EventManager.BL.DTOs.Users
 {
     public class UserDTO
     {
+        [Required]
         public int Id { get; set; }
         [Required]
         public string Name { get; set; }

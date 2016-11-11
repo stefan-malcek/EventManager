@@ -37,7 +37,7 @@ namespace EventManager.BL.TestConsole
 
             //create
             Console.WriteLine("\nCreate");
-            _addressService.CreateAddress(new AddressDTO
+            _addressService.CreateAddress(new AddressCreateDTO
             {
                 Building = "TestBuilding",
                 Street = "TestStreet",
