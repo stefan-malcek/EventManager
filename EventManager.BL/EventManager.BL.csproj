@@ -80,6 +80,8 @@
     <Compile Include="DTOs\EventReviews\EventReviewDTO.cs" />
     <Compile Include="DTOs\EventReviews\EventReviewUpdateDTO.cs" />
     <Compile Include="DTOs\Events\EventDTO.cs" />
+    <Compile Include="DTOs\Events\EventDetailDTO.cs" />
+    <Compile Include="DTOs\Events\EventMinorDTO.cs" />
     <Compile Include="DTOs\EventOrganizerDTO.cs" />
     <Compile Include="DTOs\EventReviews\EventReviewCreateDTO.cs" />
     <Compile Include="DTOs\Events\EventPagedListResultDTO.cs" />

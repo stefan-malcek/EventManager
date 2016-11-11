@@ -22,6 +22,7 @@ namespace EventManager.BL.Test
         private readonly string _newCity = "Ostrava";
         private IWindsorContainer _container;
         private IAddressService _addressService;
+        private EventManagerDbContext _dbContext;
 
         [TestInitialize]
         public void SetUp()
@@ -31,22 +32,37 @@ namespace EventManager.BL.Test
             AutoMapperConfig.Initialize();
 
             _addressService = _container.Resolve<IAddressService>();
+            _dbContext = new EventManagerDbContext();
         }
 
         [TestCleanup]
         public void Clean()
         {
-            new EventManagerDbContext().Addresses.Remove(new Address {ID = 1});
+            foreach (var address in _dbContext.Addresses)
+            {
+                _dbContext.Addresses.Remove(address);
+            }
+
+            _dbContext.Dispose();
         }
 
         [TestMethod]
         public void CreateAddress_ValidAddress_CorrectResult()
         {
-            InsertTestAddress();
+            var addressCreateDto = new AddressCreateDTO
+            {
+                Building = "TestBuilding",
+                Street = "TestStreet",
+                StreetNumber = "1",
+                City = _oldCity
+            };
 
-            var addresses = _addressService.ListAddresses(null);
 
-            Assert.AreEqual(1, addresses.Count(), "Count should be 1.");
+            _addressService.CreateAddress(addressCreateDto);
+
+
+
+            //Assert.AreEqual(, addresses.Count(), "Count should be 1.");
         }
 
         [TestMethod]
@@ -85,13 +101,7 @@ namespace EventManager.BL.Test
 
         private void InsertTestAddress()
         {
-            _addressService.CreateAddress(new AddressCreateDTO
-            {
-                Building = "TestBuilding",
-                Street = "TestStreet",
-                StreetNumber = "1",
-                City = _oldCity
-            });
+
         }
 
         private AddressDTO GetFirstAddress()

@@ -41,7 +41,6 @@ namespace EventManager.BL.Services.Users
             {
                 var user = _userRepository.GetById(userDto.Id);
                 Mapper.Map(userDto, user);
-
                 _userRepository.Update(user);
                 uow.Commit();
             }

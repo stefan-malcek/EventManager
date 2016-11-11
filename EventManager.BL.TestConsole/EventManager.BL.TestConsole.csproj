@@ -77,9 +77,17 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\EventManager.BL.TestData\EventManager.BL.TestData.csproj">
+      <Project>{c766935b-0cfc-4b2f-aa26-62872ffed467}</Project>
+      <Name>EventManager.BL.TestData</Name>
+    </ProjectReference>
     <ProjectReference Include="..\EventManager.BL\EventManager.BL.csproj">
       <Project>{e5ec8b2e-0d8f-49ca-847f-c55393313804}</Project>
       <Name>EventManager.BL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EventManager.DAL\EventManager.DAL.csproj">
+      <Project>{7a875f5c-4117-4a67-8738-a7660aa77d99}</Project>
+      <Name>EventManager.DAL</Name>
     </ProjectReference>
     <ProjectReference Include="..\Riganti.Utils.Infrastructure.Core\Riganti.Utils.Infrastructure.Core.csproj">
       <Project>{43943d75-b4c8-4152-80cf-e6510bf3db23}</Project>

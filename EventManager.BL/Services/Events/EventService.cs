@@ -42,7 +42,7 @@ namespace EventManager.BL.Services.Events
                 @event.EventOrganizer = new EventOrganizer
                 {
                     Event = @event,
-                    User = GetOrganizer(eventDto.EventOrganizerId)
+                    User = GetOrganizer(eventDto.UserId)
                 };
 
                 _eventRepository.Insert(@event);
@@ -56,9 +56,8 @@ namespace EventManager.BL.Services.Events
             {
                 var @event = _eventRepository.GetById(eventDto.Id, g => g.EventOrganizer);
                 Mapper.Map(eventDto, @event);
-
                 @event.Address = GetAddress(eventDto.AddressId);
-                //TODO @event.EventOrganizer = GetOrganizer(eventDto.EventOrganizerId);
+                @event.EventOrganizer.User = GetOrganizer(eventDto.UserId);
 
                 //TODO eventReviews
 
@@ -80,7 +79,7 @@ namespace EventManager.BL.Services.Events
         {
             using (UnitOfWorkProvider.Create())
             {
-                var @event = _addressRepository.GetById(eventId);
+                var @event = _eventRepository.GetById(eventId);
                 return @event == null ? null : Mapper.Map<EventDTO>(@event);
             }
         }

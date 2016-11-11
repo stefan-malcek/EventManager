@@ -1,5 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace EventManager.BL.DTOs.Events
 {
@@ -20,12 +24,11 @@ namespace EventManager.BL.DTOs.Events
         public TimeSpan Start { get; set; }
         [Required]
         public TimeSpan End { get; set; }
-        public TimeSpan Duration => End - Start;
         public int? Capacity { get; set; }
-        public int? Fee { get; set; }
+        public int Fee { get; set; }
         [Required]
         public int AddressId { get; set; }
         [Required]
-        public int EventOrganizerId { get; set; }
+        public int UserId { get; set; }
     }
 }

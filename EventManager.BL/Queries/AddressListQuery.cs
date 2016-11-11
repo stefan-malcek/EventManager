@@ -23,7 +23,7 @@ namespace EventManager.BL.Queries
         {
             IQueryable<Address> query = Context.Addresses;
 
-            if (!string.IsNullOrEmpty(Filter?.City))
+            if (!string.IsNullOrEmpty(Filter.City))
             {
                 query = query.Where(w => w.City.ToLower().Contains(Filter.City.ToLower()));
             }

@@ -25,12 +25,12 @@ namespace EventManager.BL.Queries
             IQueryable<Event> query = Context.Events
                                              .Include(nameof(Event.Address))
                                              .Include(nameof(Event.EventOrganizer));
-            
+
             if (!string.IsNullOrEmpty(Filter.Lecturer))
             {
                 query = query.Where(w => w.Lecturer.ToLower().Contains(Filter.Lecturer.ToLower()));
             }
-            
+
             if (!Filter.Date.Equals(new DateTime()))
             {
                 query = query.Where(w => w.Date == Filter.Date);
@@ -51,9 +51,14 @@ namespace EventManager.BL.Queries
                 query = query.Where(w => w.Address.ID == Filter.AddressId);
             }
 
-            if (Filter.OrganizerId > 0)
+            if (Filter.UserId > 0)
             {
-                query = query.Where(w => w.EventOrganizer.User.ID == Filter.OrganizerId);
+                query = query.Where(w => w.EventOrganizer.User.ID == Filter.UserId);
+            }
+
+            if (Filter.ListOnlyActual)
+            {
+                query = query.Where(w => w.Date >= DateTime.Today);
             }
 
             return query.ProjectTo<EventDTO>();

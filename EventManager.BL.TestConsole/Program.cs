@@ -7,16 +7,25 @@ using Castle.Windsor;
 using EventManager.BL.Bootstrap;
 using EventManager.BL.DTOs;
 using EventManager.BL.DTOs.Addresses;
+using EventManager.BL.DTOs.Events;
 using EventManager.BL.DTOs.Filters;
+using EventManager.BL.DTOs.Users;
 using EventManager.BL.Services.Addresses;
+using EventManager.BL.Services.Events;
+using EventManager.BL.Services.Users;
+using EventManager.BL.TestData;
+using EventManager.DAL.Enums;
 
 namespace EventManager.BL.TestConsole
 {
     public class Program
     {
         private static IAddressService _addressService;
+        private static IUserService _userService;
+        private static IEventService _eventService;
 
         private static IWindsorContainer _container;
+
 
         static void Main(string[] args)
         {
@@ -25,6 +34,8 @@ namespace EventManager.BL.TestConsole
             AutoMapperConfig.Initialize();
 
             TestAddressService();
+            TestUserService();
+            TestEventService();
 
             Console.ReadKey();
         }
@@ -36,35 +47,146 @@ namespace EventManager.BL.TestConsole
             Console.WriteLine("AddressService");
 
             //create
-            Console.WriteLine("\nCreate");
-            _addressService.CreateAddress(new AddressCreateDTO
-            {
-                Building = "TestBuilding",
-                Street = "TestStreet",
-                StreetNumber = "1",
-                City = "TestCity"
-            });
+            Console.Write("Create - ");
+            _addressService.CreateAddress(Factory.GetAddress1());
 
             //get
             var address = _addressService.GetAddress(1);
-            Console.WriteLine(address);
+            Console.WriteLine(address != null);
 
             //update
-            
+            Console.Write("Update - ");
+            //arrange
             string newCity = "Ostrava";
             address.City = newCity;
+            //act
             _addressService.UpdateAddress(address);
-            _addressService.GetAddress(1);
-            Console.WriteLine(address);
+            //assert
+            address = _addressService.GetAddress(1);
+            Console.WriteLine(Equals(newCity, address.City));
 
             //list
-            Console.WriteLine("\nListing");
-            var addresses = _addressService.ListAddresses(new AddressFilter { City = newCity });
-            Console.WriteLine(addresses.Count() == 1 ? "Is working" : "Is not working");
+            Console.Write("Listing - ");
+            //arrange
+            _addressService.CreateAddress(Factory.GetAddress2());
+            _addressService.CreateAddress(Factory.GetAddress3());
+            //act
+            var addresses = _addressService.ListAddresses(new AddressFilter());
+            //assert
+            Console.WriteLine(addresses.Count() == 3);
+
+            Console.Write("Listing with filter - ");
+            //act
+            addresses = _addressService.ListAddresses(new AddressFilter { City = newCity });
+            //assert
+            Console.WriteLine(addresses.Count() == 1);
 
             //delete
-            Console.WriteLine("\nDelete");
+            Console.Write("Delete - ");
+            //act
             _addressService.DeleteAddress(address.Id);
+            //assert
+            address = _addressService.GetAddress(address.Id);
+            Console.WriteLine(address == null);
+        }
+
+        private static void TestUserService()
+        {
+            _userService = _container.Resolve<IUserService>();
+
+            Console.WriteLine("\nUserService");
+
+            //create
+            Console.Write("Create - ");
+            _userService.CreateUser(Factory.GetMember());
+
+            //get
+            var user = _userService.GetUser(1);
+            Console.WriteLine(user != null);
+
+            //update
+            Console.Write("Update - ");
+            //arrange
+            user.Role = UserRole.Administrator;
+            //act
+            _userService.UpdateUser(user);
+            //assert
+            user = _userService.GetUser(1);
+            Console.WriteLine(UserRole.Administrator == user.Role);
+
+            //list
+            Console.Write("Listing - ");
+            //arrange
+            _userService.CreateUser(Factory.GetOrganizer());
+            //act
+            var users = _userService.ListUsers(new UserFilter());
+            //assert
+            Console.WriteLine(users.Count() == 2);
+
+            Console.Write("Listing with filter - ");
+            //act
+            users = _userService.ListUsers(new UserFilter { Role = UserRole.Member });
+            //assert
+            Console.WriteLine(!users.Any());
+
+            //delete
+            Console.Write("Delete - ");
+            //act
+            _userService.DeleteUser(user.Id);
+            //assert
+            user = _userService.GetUser(user.Id);
+            Console.WriteLine(user == null);
+        }
+
+        public static void TestEventService()
+        {
+            Console.WriteLine("\nEventService");
+            _eventService = _container.Resolve<IEventService>();
+
+            //create
+            Console.Write("Create - ");
+            _eventService.CreateEvent(Factory.GetEvent1());
+
+            //get
+            var @event = _eventService.GetEvent(1);
+            Console.WriteLine(@event != null);
+
+            //update
+            Console.Write("Update - ");
+            //arrange
+            var newDate = new DateTime(2016, 12, 15);
+            @event.Date = newDate;
+            var newLecturer = "Jirka Maly";
+            @event.Lecturer = newLecturer;
+            @event.AddressId = 3;
+            //act
+            _eventService.UpdateEvent(@event);
+            //assert
+            @event = _eventService.GetEvent(1);
+            Console.WriteLine(Equals(@event.Date, newDate) && Equals(@event.Lecturer, newLecturer) && @event.AddressId == 3);
+
+            //list
+            Console.Write("Listing - ");
+            //arrange
+            _eventService.CreateEvent(Factory.GetEvent2());
+            //act
+            var events = _eventService.ListEvents(new EventFilter());
+            //assert
+            Console.WriteLine(events.TotalResultCount == 2);
+
+            Console.Write("Listing with filter - ");
+            //act
+            events = _eventService.ListEvents(new EventFilter { MaximumFee = 30 });
+            //assert
+            Console.WriteLine(events.TotalResultCount == 2);
+
+            //delete
+            Console.Write("Delete - ");
+            //act
+            _eventService.DeleteEvent(1);
+            //assert
+            @event = _eventService.GetEvent(1);
+            Console.WriteLine(@event == null);
         }
     }
 }

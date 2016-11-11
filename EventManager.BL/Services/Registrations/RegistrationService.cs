@@ -35,7 +35,6 @@ namespace EventManager.BL.Services.Registrations
                 var registration = Mapper.Map<Registration>(registrationDto);
                 registration.Event = GetEvent(registrationDto.EventId);
                 registration.User = GetUser(registrationDto.UserId);
-
                 _registrationRepository.Insert(registration);
                 uow.Commit();
             }
@@ -47,7 +46,6 @@ namespace EventManager.BL.Services.Registrations
             {
                 var registration = _registrationRepository.GetById(registrationDto.Id);
                 Mapper.Map(registrationDto, registration);
-
                 _registrationRepository.Update(registration);
                 uow.Commit();
             }
@@ -74,7 +72,6 @@ namespace EventManager.BL.Services.Registrations
         private User GetUser(int userId)
         {
             var user = _userRepository.GetById(userId);
-
             if (user == null)
             {
                 throw new ArgumentException("Invalid parameter value.", nameof(userId));
@@ -86,7 +83,6 @@ namespace EventManager.BL.Services.Registrations
         private Event GetEvent(int eventId)
         {
             var @event = _eventRepository.GetById(eventId);
-
             if (@event == null)
             {
                 throw new ArgumentException("Invalid parameter value.", nameof(eventId));

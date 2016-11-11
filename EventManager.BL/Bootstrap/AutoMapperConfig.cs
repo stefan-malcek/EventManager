@@ -20,7 +20,7 @@ namespace EventManager.BL.Bootstrap
                      .ForMember(d => d.Id, opt => opt.MapFrom(s => s.ID))
                      .ReverseMap();
 
-                config.CreateMap<AddressDTO, Address>();
+                config.CreateMap<AddressCreateDTO, Address>();
 
                 //user
                 config.CreateMap<User, UserDTO>()
@@ -33,7 +33,7 @@ namespace EventManager.BL.Bootstrap
                 config.CreateMap<Event, EventDTO>()
                     .ForMember(d => d.Id, opt => opt.MapFrom(s => s.ID))
                     .ForMember(d => d.AddressId, opt => opt.MapFrom(s => s.Address.ID))
-                    .ForMember(d => d.EventOrganizerId, opt => opt.MapFrom(s => s.EventOrganizer.ID))
+                    .ForMember(d => d.UserId, opt => opt.MapFrom(s => s.EventOrganizer.User.ID))
                     .ReverseMap();
 
                 //event review

@@ -28,7 +28,12 @@ namespace EventManager.BL.Queries
                 query = query.Where(w => w.Event.ID == Filter.EventId);
             }
 
-            if (Filter.State != null)
+            if (Filter.UserId > 0)
+            {
+                query = query.Where(w => w.User.ID == Filter.UserId);
+            }
+
+            if (Filter.State.HasValue)
             {
                 query = query.Where(w => w.State == Filter.State.Value);
             }

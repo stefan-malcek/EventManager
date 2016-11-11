@@ -9,6 +9,6 @@ namespace EventManager.BL.DTOs.Filters
 {
     public class UserFilter
     {
-        public UserRole Role { get; set; }
+        public UserRole? Role { get; set; }
     }
 }

@@ -23,7 +23,7 @@ namespace EventManager.BL.Queries
         {
             IQueryable<User> query = Context.Users;
 
-            if (Filter != null)
+            if (Filter.Role.HasValue)
             {
                 query = query.Where(w => w.Role == Filter.Role);
             }
