@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Data.Entity;
-using BrockAllen.MembershipReboot;
 using Castle.MicroKernel.Registration;
 using Castle.MicroKernel.SubSystems.Configuration;
 using Castle.Windsor;
 using EventManager.BL.AppEfConfiguration;
+using EventManager.BL.Miscellaneous.DateTimeProvider;
 using EventManager.BL.Services;
 using EventManager.DAL;
 using Riganti.Utils.Infrastructure.Core;
@@ -29,10 +29,6 @@ namespace EventManager.BL.Bootstrap
                     .Instance(new HttpContextUnitOfWorkRegistry(new ThreadLocalUnitOfWorkRegistry()))
                     .LifestyleSingleton(),
 
-                //Component.For<IUserAccountRepository<UserAccount>>()
-                //    .ImplementedBy<UserAccountManager>()
-                //    .LifestyleTransient(),
-
                 Component.For(typeof(IRepository<,>))
                     .ImplementedBy(typeof(EntityFrameworkRepository<,>))
                     .LifestyleTransient(),
@@ -45,11 +41,16 @@ namespace EventManager.BL.Bootstrap
                     .BasedOn(typeof(IRepository<,>))
                     .LifestyleTransient(),
 
-                    Classes.FromThisAssembly()
+                Classes.FromThisAssembly()
                     .BasedOn<EventManagerService>()
                     .WithServiceDefaultInterfaces()
-                    .LifestyleTransient()
-                //TODO register services a facades
+                    .LifestyleTransient(),
+
+                Component.For<IDateTimeProvider>()
+                    .Instance(new DateTimeProvider())
+                    .LifestyleSingleton(),
+
+                Classes.FromThisAssembly().InNamespace("EventManager.BL.Facades")
                 );
         }
     }

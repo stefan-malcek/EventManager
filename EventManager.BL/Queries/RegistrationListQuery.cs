@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using AutoMapper.QueryableExtensions;
 using EventManager.BL.AppEfConfiguration;
-using EventManager.BL.DTOs;
 using EventManager.BL.DTOs.Filters;
 using EventManager.BL.DTOs.Registrations;
 using EventManager.DAL.Entities;

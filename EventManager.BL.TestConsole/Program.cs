@@ -1,17 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Castle.Windsor;
 using EventManager.BL.Bootstrap;
-using EventManager.BL.DTOs;
-using EventManager.BL.DTOs.Addresses;
-using EventManager.BL.DTOs.Events;
 using EventManager.BL.DTOs.Filters;
-using EventManager.BL.DTOs.Users;
+using EventManager.BL.Facades;
 using EventManager.BL.Services.Addresses;
 using EventManager.BL.Services.Events;
+using EventManager.BL.Services.Registrations;
+using EventManager.BL.Services.Reviews;
 using EventManager.BL.Services.Users;
 using EventManager.BL.TestData;
 using EventManager.DAL.Enums;
@@ -23,6 +19,9 @@ namespace EventManager.BL.TestConsole
         private static IAddressService _addressService;
         private static IUserService _userService;
         private static IEventService _eventService;
+        private static IReviewService _reviewService;
+        private static IRegistrationService _registrationService;
+        private static EventFacade _eventFacade;
 
         private static IWindsorContainer _container;
 
@@ -36,6 +35,9 @@ namespace EventManager.BL.TestConsole
             TestAddressService();
             TestUserService();
             TestEventService();
+            TestReviewService();
+            TestRegistrationService();
+            TestEventDetail();
 
             Console.ReadKey();
         }
@@ -84,9 +86,9 @@ namespace EventManager.BL.TestConsole
             //delete
             Console.Write("Delete - ");
             //act
-            _addressService.DeleteAddress(address.Id);
+            _addressService.DeleteAddress(1);
             //assert
-            address = _addressService.GetAddress(address.Id);
+            address = _addressService.GetAddress(1);
             Console.WriteLine(address == null);
         }
 
@@ -98,7 +100,7 @@ namespace EventManager.BL.TestConsole
 
             //create
             Console.Write("Create - ");
-            _userService.CreateUser(Factory.GetMember());
+            _userService.CreateUser(Factory.GetMember1());
 
             //get
             var user = _userService.GetUser(1);
@@ -169,16 +171,17 @@ namespace EventManager.BL.TestConsole
             Console.Write("Listing - ");
             //arrange
             _eventService.CreateEvent(Factory.GetEvent2());
+            _eventService.CreateEvent(Factory.GetEvent3());
             //act
             var events = _eventService.ListEvents(new EventFilter());
             //assert
-            Console.WriteLine(events.TotalResultCount == 2);
+            Console.WriteLine(events.TotalResultCount == 3);
 
             Console.Write("Listing with filter - ");
             //act
             events = _eventService.ListEvents(new EventFilter { MaximumFee = 30 });
             //assert
-            Console.WriteLine(events.TotalResultCount == 2);
+            Console.WriteLine(events.TotalResultCount == 3);
 
             //delete
             Console.Write("Delete - ");
@@ -187,6 +190,65 @@ namespace EventManager.BL.TestConsole
             //assert
             @event = _eventService.GetEvent(1);
             Console.WriteLine(@event == null);
+        }
+
+
+        private static void TestReviewService()
+        {
+            Console.WriteLine("\nReviewService");
+            _reviewService = _container.Resolve<IReviewService>();
+
+            //create
+            Console.Write("Create - ");
+            _reviewService.AddReview(Factory.GetReview1());
+            _reviewService.AddReview(Factory.GetReview2());
+            _reviewService.AddReview(Factory.GetReview3());
+            _reviewService.AddReview(Factory.GetReview4());
+            _reviewService.AddReview(Factory.GetReview5());
+
+            Console.Write("Listing with filter - ");
+            //act
+            var reviews = _reviewService.ListReviewsForEvent(2);
+            //assert
+            Console.WriteLine(reviews.Count() == 5);
+        }
+
+        private static void TestRegistrationService()
+        {
+            Console.WriteLine("\nRegistrationService");
+            _registrationService = _container.Resolve<IRegistrationService>();
+
+            //create valid
+            _userService.CreateUser(Factory.GetMember2());
+            _registrationService.Register(Factory.GetValidRegistration());
+
+            var registration = _registrationService.GetRegistration(1);
+
+            try
+            {
+                //user can not have two registrations for same event
+                _registrationService.Register(Factory.GetValidRegistration());
+            }
+            catch (InvalidOperationException ex) { }
+
+            _registrationService.Unregister(1);
+
+            try
+            {
+                //event is closed
+                //_addressService.CreateAddress(Factory.GetAddress3());
+                _registrationService.Register(Factory.GetOldRegistration());
+            }
+            catch (InvalidOperationException ex) { }
+
+            //false
+            var isEventClosed = _registrationService.AreRegistrationsAllowed(3);
+        }
+
+        private static void TestEventDetail()
+        {
+            _eventFacade = _container.Resolve<EventFacade>();
+            var eventDetail = _eventFacade.GetEventDetail(2);
         }
     }
 }

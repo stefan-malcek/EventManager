@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using AutoMapper;
-using EventManager.BL.DTOs;
 using EventManager.BL.DTOs.Addresses;
 using EventManager.BL.DTOs.Filters;
 using EventManager.BL.Queries;

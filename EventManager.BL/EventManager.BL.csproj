@@ -81,8 +81,6 @@
     <Compile Include="DTOs\EventReviews\EventReviewUpdateDTO.cs" />
     <Compile Include="DTOs\Events\EventDTO.cs" />
     <Compile Include="DTOs\Events\EventDetailDTO.cs" />
-    <Compile Include="DTOs\Events\EventMinorDTO.cs" />
-    <Compile Include="DTOs\EventOrganizerDTO.cs" />
     <Compile Include="DTOs\EventReviews\EventReviewCreateDTO.cs" />
     <Compile Include="DTOs\Events\EventPagedListResultDTO.cs" />
     <Compile Include="DTOs\Filters\AddressFilter.cs" />
@@ -93,12 +91,14 @@
     <Compile Include="DTOs\PagedListResultDTO.cs" />
     <Compile Include="DTOs\Registrations\RegistrationCreateDTO.cs" />
     <Compile Include="DTOs\Registrations\RegistrationDTO.cs" />
-    <Compile Include="DTOs\Registrations\RegistrationUpdateDTO.cs" />
     <Compile Include="DTOs\Users\UserCreateDTO.cs" />
     <Compile Include="DTOs\Users\UserDTO.cs" />
     <Compile Include="Facades\EventFacade.cs" />
     <Compile Include="Facades\RegistrationFacade.cs" />
     <Compile Include="Facades\UserFacade.cs" />
+    <Compile Include="Miscellaneous\DateTimeProvider\DateTimeProvider.cs" />
+    <Compile Include="Miscellaneous\DateTimeProvider\IDateTimeProvider.cs" />
+    <Compile Include="Miscellaneous\EventExtensions.cs" />
     <Compile Include="Miscellaneous\EventSortCriteria.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Queries\AddressListQuery.cs" />

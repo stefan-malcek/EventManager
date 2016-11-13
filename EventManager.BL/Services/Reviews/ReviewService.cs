@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using AutoMapper;
 using EventManager.BL.DTOs.EventReviews;
 using EventManager.BL.DTOs.Filters;
@@ -18,7 +15,8 @@ namespace EventManager.BL.Services.Reviews
         private readonly EventRepository _eventRepository;
         private readonly EventReviewListQuery _eventReviewListQuery;
 
-        public ReviewService(EventReviewRepository eventReviewRepository, EventRepository eventRepository, EventReviewListQuery eventReviewListQuery)
+        public ReviewService(EventReviewRepository eventReviewRepository, EventRepository eventRepository, 
+            EventReviewListQuery eventReviewListQuery)
         {
             _eventReviewRepository = eventReviewRepository;
             _eventRepository = eventRepository;
@@ -42,7 +40,6 @@ namespace EventManager.BL.Services.Reviews
             {
                 var review = _eventReviewRepository.GetById(reviewDto.Id, g => g.Event);
                 Mapper.Map(reviewDto, review);
-
                 _eventReviewRepository.Update(review);
                 uow.Commit();
             }
@@ -69,7 +66,6 @@ namespace EventManager.BL.Services.Reviews
         private Event GetEvent(int eventId)
         {
             var @event = _eventRepository.GetById(eventId);
-
             if (@event == null)
             {
                 throw new ArgumentException("Invalid parameter value.", nameof(eventId));

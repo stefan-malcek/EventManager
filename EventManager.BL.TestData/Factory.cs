@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using EventManager.BL.DTOs.Addresses;
+using EventManager.BL.DTOs.EventReviews;
 using EventManager.BL.DTOs.Events;
+using EventManager.BL.DTOs.Registrations;
 using EventManager.BL.DTOs.Users;
 using EventManager.DAL.Enums;
 
@@ -45,7 +43,7 @@ namespace EventManager.BL.TestData
             };
         }
 
-        public static UserCreateDTO GetMember()
+        public static UserCreateDTO GetMember1()
         {
             return new UserCreateDTO
             {
@@ -64,6 +62,16 @@ namespace EventManager.BL.TestData
                     Birthday = new DateTime(1988, 8, 4),
                     Role = UserRole.Organizer
                 };
+        }
+
+        public static UserCreateDTO GetMember2()
+        {
+            return new UserCreateDTO
+            {
+                Name = "Petr Had",
+                Birthday = new DateTime(1987, 7, 2),
+                Role = UserRole.Member
+            };
         }
 
         public static EventDTO GetEvent1()
@@ -95,6 +103,94 @@ namespace EventManager.BL.TestData
                 UserId = 2,
                 Capacity = 100,
                 Fee = 20
+            };
+        }
+
+        public static EventDTO GetEvent3()
+        {
+            return new EventDTO
+            {
+                AddressId = 2,
+                Title = "Windows 10",
+                Description = "Basic work with operation system Windows 10.",
+                Lecturer = "Eugen Novotny",
+                Date = new DateTime(2016, 10, 1),
+                Start = new TimeSpan(16, 30, 0),
+                End = new TimeSpan(19, 0, 0),
+                UserId = 2
+            };
+        }
+
+        public static EventReviewCreateDTO GetReview1()
+        {
+            return new EventReviewCreateDTO
+            {
+                EventId = 2,
+                Rating = 5,
+                Author = "User1",
+                Review = "Very good examples."
+            };
+        }
+
+        public static EventReviewCreateDTO GetReview2()
+        {
+            return new EventReviewCreateDTO
+            {
+                EventId = 2,
+                Rating = 5,
+                Author = "User2",
+                Review = "Very good examples."
+            };
+        }
+
+        public static EventReviewCreateDTO GetReview3()
+        {
+            return new EventReviewCreateDTO
+            {
+                EventId = 2,
+                Rating = 5,
+                Author = "User3",
+                Review = "Very good examples."
+            };
+        }
+
+        public static EventReviewCreateDTO GetReview4()
+        {
+            return new EventReviewCreateDTO
+            {
+                EventId = 2,
+                Rating = 5,
+                Author = "User4",
+                Review = "Very good examples."
+            };
+        }
+
+        public static EventReviewCreateDTO GetReview5()
+        {
+            return new EventReviewCreateDTO
+            {
+                EventId = 2,
+                Rating = 1,
+                Author = "User5",
+                Review = "Very bad examples."
+            };
+        }
+
+        public static RegistrationCreateDTO GetValidRegistration()
+        {
+            return new RegistrationCreateDTO
+            {
+                EventId = 2,
+                UserId = 3
+            };
+        }
+
+        public static RegistrationCreateDTO GetOldRegistration()
+        {
+            return new RegistrationCreateDTO
+            {
+                EventId = 3,
+                UserId = 3
             };
         }
     }

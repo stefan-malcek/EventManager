@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using EventManager.BL.DTOs;
-using EventManager.BL.DTOs.Events;
+﻿using System.Collections.Generic;
 using EventManager.BL.DTOs.Filters;
 using EventManager.BL.DTOs.Users;
 

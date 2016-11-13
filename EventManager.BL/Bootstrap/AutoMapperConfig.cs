@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using EventManager.BL.DTOs;
 using EventManager.BL.DTOs.Addresses;
 using EventManager.BL.DTOs.EventReviews;
 using EventManager.BL.DTOs.Events;
@@ -52,10 +51,11 @@ namespace EventManager.BL.Bootstrap
                    .ForMember(d => d.EventId, opt => opt.MapFrom(s => s.Event.ID))
                    .ForMember(d => d.UserId, opt => opt.MapFrom(s => s.User.ID));
 
-                config.CreateMap<RegistrationDTO, Registration>();
+                config.CreateMap<RegistrationCreateDTO, Registration>();
 
-                config.CreateMap<RegistrationUpdateDTO, Registration>()
-                    .ForMember(d => d.ID, opt => opt.MapFrom(s => s.Id));
+                config.CreateMap<RegistrationDTO, Registration>()
+                .ForMember(d => d.ID, opt => opt.MapFrom(s => s.Id));
+
             });
         }
     }

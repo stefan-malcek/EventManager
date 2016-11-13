@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using AutoMapper;
-using EventManager.BL.DTOs;
 using EventManager.BL.DTOs.Events;
 using EventManager.BL.DTOs.Filters;
 using EventManager.BL.Queries;
@@ -59,8 +53,6 @@ namespace EventManager.BL.Services.Events
                 @event.Address = GetAddress(eventDto.AddressId);
                 @event.EventOrganizer.User = GetOrganizer(eventDto.UserId);
 
-                //TODO eventReviews
-
                 _eventRepository.Update(@event);
                 uow.Commit();
             }
@@ -111,7 +103,6 @@ namespace EventManager.BL.Services.Events
         private User GetOrganizer(int organizerId)
         {
             var organizer = _userRepository.GetById(organizerId);
-
             if (organizer == null)
             {
                 throw new ArgumentException("Invalid pamater value.", nameof(organizerId));
@@ -123,7 +114,6 @@ namespace EventManager.BL.Services.Events
         private Address GetAddress(int addressId)
         {
             var address = _addressRepository.GetById(addressId);
-
             if (address == null)
             {
                 throw new ArgumentException("Invalid pamater value.", nameof(addressId));

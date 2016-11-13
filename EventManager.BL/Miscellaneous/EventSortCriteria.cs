@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace EventManager.BL.Miscellaneous
+﻿namespace EventManager.BL.Miscellaneous
 {
     public enum EventSortCriteria
     {
