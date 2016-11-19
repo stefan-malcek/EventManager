@@ -54,7 +54,7 @@ namespace EventManager.BL.Services.Reviews
             }
         }
 
-        public IEnumerable<EventReviewDTO> ListReviewsForEvent(int eventId)
+        public IEnumerable<EventReviewDTO> ListReviewsForEvent(int eventId = 0)
         {
             using (UnitOfWorkProvider.Create())
             {

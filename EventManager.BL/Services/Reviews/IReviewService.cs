@@ -11,6 +11,6 @@ namespace EventManager.BL.Services.Reviews
 
         void DeleteReview(int reviewId);
 
-        IEnumerable<EventReviewDTO> ListReviewsForEvent(int eventId);
+        IEnumerable<EventReviewDTO> ListReviewsForEvent(int eventId = 0);
     }
 }

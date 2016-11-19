@@ -111,6 +111,11 @@ namespace EventManager.BL.Facades
             return _eventService.GetEvent(eventId);
         }
 
+        public IEnumerable<EventDTO> ListEvents()
+        {
+            return _eventService.ListEvents();
+        }
+
         /// <summary>
         /// Return detail of event with given eventId.
         /// </summary>
@@ -170,6 +175,11 @@ namespace EventManager.BL.Facades
         public void DeleteReview(int reviewId)
         {
             _reviewService.DeleteReview(reviewId);
+        }
+
+        public IEnumerable<EventReviewDTO> ListReviewsForEvent(int id = 0)
+        {
+            return _reviewService.ListReviewsForEvent(id);
         }
     }
 }

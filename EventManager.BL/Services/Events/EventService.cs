@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using AutoMapper;
 using EventManager.BL.DTOs.Events;
 using EventManager.BL.DTOs.Filters;
@@ -73,6 +74,15 @@ namespace EventManager.BL.Services.Events
             {
                 var @event = _eventRepository.GetById(eventId);
                 return @event == null ? null : Mapper.Map<EventDTO>(@event);
+            }
+        }
+
+        public IEnumerable<EventDTO> ListEvents()
+        {
+            using (UnitOfWorkProvider.Create())
+            {
+                _eventListQuery.Filter = new EventFilter();
+                return _eventListQuery.Execute() ?? new List<EventDTO>();
             }
         }
 
