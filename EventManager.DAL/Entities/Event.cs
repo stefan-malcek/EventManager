@@ -29,7 +29,7 @@ namespace EventManager.DAL.Entities
         [NotMapped]
         public TimeSpan Duration => End - Start;
         public int? Capacity { get; set; }
-        public int? Fee { get; set; }
+        public int Fee { get; set; }
         [Required]
         public virtual Address Address { get; set; }
         [Required]
