@@ -21,7 +21,7 @@ namespace EventManager.BL.DTOs.Addresses
 
         public override string ToString()
         {
-            return $"Id: {Id}, Building: {Building}, Street: {Street}, StreetNumber: {StreetNumber}, City: {City}";
+            return $"Building: {Building}, Street: {Street}, StreetNumber: {StreetNumber}, City: {City}";
         }
     }
 }

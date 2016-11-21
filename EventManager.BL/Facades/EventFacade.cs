@@ -125,9 +125,9 @@ namespace EventManager.BL.Facades
         {
             var @event = GetEvent(eventId);
             var reviews = _reviewService.ListReviewsForEvent(eventId).ToList();
-            var isEnded = _registrationService.AreRegistrationsAllowed(eventId);
+            var isEnded = _registrationService.IsEnded(eventId);
             var registrations = _registrationService.ListRegistrations(new RegistrationFilter { EventId = eventId });
-            var averageRating = reviews.Any() ? reviews.Average(a => a.Rating) as double? : null;
+            var averageRating = reviews.Any() ? reviews.Average(a => a.Rating) : 0;
 
             return new EventDetailDTO
             {

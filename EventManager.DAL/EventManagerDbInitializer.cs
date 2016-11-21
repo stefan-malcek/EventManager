@@ -12,6 +12,16 @@ namespace EventManager.DAL
         {
             base.InitializeDatabase(context);
 
+            var lorem = "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Neque porro quisquam est, qui dolorem ipsum " +
+                        "quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore " +
+                        "et dolore magnam aliquam quaerat voluptatem. Pellentesque sapien. Donec vitae arcu. Morbi imperdiet, mauris ac " +
+                        "auctor dictum, nisl ligula egestas nulla, et sollicitudin sem purus in lacus. Fusce nibh. Itaque earum rerum hic " +
+                        "tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus" +
+                        " asperiores repellat. Nulla non arcu lacinia neque faucibus fringilla. Nullam faucibus mi quis velit. Aliquam erat" +
+                        " volutpat. Integer in sapien. Nunc dapibus tortor vel mi dapibus sollicitudin. Nam sed tellus id magna elementum " +
+                        "tincidunt. Vivamus luctus egestas leo. Duis viverra diam non justo. Sed ac dolor sit amet purus malesuada congue. " +
+                        "Nulla est. In rutrum. Aliquam erat volutpat. Donec ipsum massa, ullamcorper in, auctor et, scelerisque sed, est.";
+
             var address = new Address
             {
                 Building = "Školící místnost společnosti Edhouse s.r.o. (Vědeckotechnický park ICT, budova A, 3. Patro)",
@@ -31,12 +41,13 @@ namespace EventManager.DAL
 
             var user = new User { Role = UserRole.Organizer };
             context.Users.Add(user);
+            context.Users.Add(new User {Role = UserRole.Member});
 
             context.Events.Add(new Event
             {
                 Address = address,
                 Title = "Entity Framework basics",
-                Description = "Just basic stuff.",
+                Description = "Just basic stuff.\n" +lorem,
                 Lecturer = "Pavel Novák",
                 Date = new DateTime(2016, 11, 1),
                 Start = new TimeSpan(14, 0, 0),
@@ -53,7 +64,8 @@ namespace EventManager.DAL
                     {
                         Rating = 3,
                         Author = "Not cool guy",
-                        Review = "I missed something there."
+                        Review = "I missed something there. Also i need to test my UI so this post will be longer. What should I say. " +
+                                 "Maybe food was not very good there. I had one adventure day after. Ok, well done. I think it is enough."
                     },
                     new EventReview
                     {
@@ -96,7 +108,7 @@ namespace EventManager.DAL
             {
                 Address = address,
                 Title = "Entity Framework advanced",
-                Description = "Some cool examples of advanced topics in Entity framework.",
+                Description = "Some cool examples of advanced topics in Entity framework.\n" + lorem,
                 Lecturer = "Jan Adamec",
                 Date = new DateTime(2016, 12, 1),
                 Start = new TimeSpan(16, 30, 0),

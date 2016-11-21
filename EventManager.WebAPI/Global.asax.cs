@@ -31,7 +31,7 @@ namespace EventManager.WebAPI
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-            ConfigureBoostrap();
+            ConfigureBootstrap();
             AutoMapperConfig.Initialize();
         }
 
@@ -41,7 +41,7 @@ namespace EventManager.WebAPI
             base.Dispose();
         }
 
-        private void ConfigureBoostrap()
+        private void ConfigureBootstrap()
         {
             _container.Install(new BussinessLayerInstaller());
             _container.Install(new WebApiInstaller());

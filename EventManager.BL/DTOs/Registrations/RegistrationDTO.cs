@@ -6,11 +6,14 @@ namespace EventManager.BL.DTOs.Registrations
     public class RegistrationDTO
     {
         public int Id { get; set; }
-        [Required]
         public RegistrationState State { get; set; }
-        [Required]
         public int EventId { get; set; }
-        [Required]
         public int UserId { get; set; }
+
+
+        public override string ToString()
+        {
+            return State.ToString();
+        }
     }
 }

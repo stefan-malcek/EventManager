@@ -9,7 +9,7 @@ namespace EventManager.BL.DTOs.Events
     {
         [Required]
         public EventDTO Event { get; set; }
-        public double? AverageRating { get; set; }
+        public double AverageRating { get; set; }
         public bool IsEnded { get; set; }
         public IEnumerable<RegistrationDTO> Registrations { get; set; }
         public IEnumerable<EventReviewDTO> Reviews { get; set; }

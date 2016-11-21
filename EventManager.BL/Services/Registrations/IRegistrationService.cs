@@ -14,7 +14,7 @@ namespace EventManager.BL.Services.Registrations
 
         RegistrationDTO GetRegistration(int eventId);
 
-        bool AreRegistrationsAllowed(int eventId);
+        bool IsEnded(int eventId);
 
         IEnumerable<RegistrationDTO> ListRegistrations(RegistrationFilter filter);
     }

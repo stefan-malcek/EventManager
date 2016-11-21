@@ -33,6 +33,7 @@ namespace EventManager.BL.Bootstrap
                     .ForMember(d => d.Id, opt => opt.MapFrom(s => s.ID))
                     .ForMember(d => d.AddressId, opt => opt.MapFrom(s => s.Address.ID))
                     .ForMember(d => d.UserId, opt => opt.MapFrom(s => s.EventOrganizer.User.ID))
+                    //.ForMember(d => d.Date, opt => opt.MapFrom(s => s.Date + s.Start))
                     .ReverseMap();
 
                 //event review
@@ -54,7 +55,8 @@ namespace EventManager.BL.Bootstrap
                 config.CreateMap<RegistrationCreateDTO, Registration>();
 
                 config.CreateMap<RegistrationDTO, Registration>()
-                .ForMember(d => d.ID, opt => opt.MapFrom(s => s.Id));
+                .ForMember(d => d.ID, opt => opt.MapFrom(s => s.Id))
+                .ForMember(d => d.State, opt => opt.MapFrom(s => s.State));
 
             });
         }

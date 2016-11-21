@@ -106,17 +106,17 @@ namespace EventManager.BL.Services.Registrations
         {
             using (UnitOfWorkProvider.Create())
             {
-                var registration = _registrationRepository.GetById(eventId);
+                var registration = _registrationRepository.GetById(eventId, i => i.Event, i => i.User);
                 return registration == null ? null : Mapper.Map<RegistrationDTO>(registration);
             }
         }
 
-        public bool AreRegistrationsAllowed(int eventId)
+        public bool IsEnded(int eventId)
         {
             using (UnitOfWorkProvider.Create())
             {
                 var @event = GetEvent(eventId);
-                return @event.GetStartDateTime() > _dateTimeProvider.GetCurrectDateTime();
+                return @event.GetStartDateTime() <= _dateTimeProvider.GetCurrectDateTime();
             }
         }
 

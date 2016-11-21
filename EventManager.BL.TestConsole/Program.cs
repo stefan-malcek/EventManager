@@ -242,7 +242,7 @@ namespace EventManager.BL.TestConsole
             catch (InvalidOperationException ex) { }
 
             //false
-            var isEventClosed = _registrationService.AreRegistrationsAllowed(3);
+            var isEventClosed = _registrationService.IsEnded(3);
         }
 
         private static void TestEventDetail()
