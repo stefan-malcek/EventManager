@@ -18,6 +18,8 @@ namespace EventManager.BL.Facades
         private readonly IReviewService _reviewService;
         private readonly IRegistrationService _registrationService;
 
+        public int EventPageSize => _eventService.EventPageSize;
+
         public EventFacade(IEventService eventService, IAddressService addressService, IReviewService reviewService,
             IRegistrationService registrationService)
         {

@@ -10,6 +10,7 @@ using EventManager.BL.DTOs.Registrations;
 using EventManager.BL.Facades;
 using EventManager.BL.Miscellaneous;
 using EventManager.PL.ViewModels.Events;
+using X.PagedList;
 
 namespace EventManager.PL.Controllers
 {
@@ -21,15 +22,13 @@ namespace EventManager.PL.Controllers
 
         public ActionResult Index()
         {
-            var laterEvents = EventFacade.ListEvents(new EventFilter { ListOnlyActual = false });
-            var furtherEvents = EventFacade.ListEvents(new EventFilter { ListOnlyActual = true })
-            var eventIndexViewModel = new EventIndexViewModel
+            var events = EventFacade.ListEvents(new EventFilter());
+            var eventListViewModel = new EventListViewModel
             {
-                LaterEvents = laterEvents,
-                FurtherEvents = furtherEvents
+                Events = new StaticPagedList<EventDTO>(events.ResultPageData, events.RequestedPage, EventFacade.EventPageSize, events.TotalResultCount)
             };
 
-            return View(eventIndexViewModel);
+            return View(eventListViewModel);
         }
 
         public ActionResult Detail(int id)
