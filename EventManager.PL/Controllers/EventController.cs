@@ -21,12 +21,15 @@ namespace EventManager.PL.Controllers
 
         public ActionResult Index()
         {
-            var evens = EventFacade.ListEvents(new EventFilter
+            var laterEvents = EventFacade.ListEvents(new EventFilter { ListOnlyActual = false });
+            var furtherEvents = EventFacade.ListEvents(new EventFilter { ListOnlyActual = true })
+            var eventIndexViewModel = new EventIndexViewModel
             {
-                SortCriteria = EventSortCriteria.Date
-            });
+                LaterEvents = laterEvents,
+                FurtherEvents = furtherEvents
+            };
 
-            return View(evens);
+            return View(eventIndexViewModel);
         }
 
         public ActionResult Detail(int id)

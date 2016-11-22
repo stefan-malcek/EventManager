@@ -76,7 +76,7 @@ namespace EventManager.BL.Services.Registrations
             {
                 CheckEventDate(registrationDto.EventId);
 
-                var registration = _registrationRepository.GetById(registrationDto.Id);
+                var registration = _registrationRepository.GetById(registrationDto.Id, x => x.Event, x => x.User);
 
                 //registration state can not be unpaid when event fee is 0
                 if (registration.Event.Fee == 0 && registrationDto.State == RegistrationState.Unpaid)
