@@ -1,101 +1,51 @@
-﻿@model EventManager.BL.DTOs.Events.EventPagedListResultDTO
+﻿@using System.Web.Mvc.Html
+@using X.PagedList.Mvc
+@model EventManager.PL.ViewModels.Events.EventListViewModel
 
 @{
     ViewBag.Title = "Index";
 }
 
-<h2>Events</h2>
+<h2 class="text-center">Events</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-
 <div class="row">
     <div class="col-md-4">
         <div class="panel panel-primary">
             <div class="panel-heading">Filter</div>
             <div class="panel-body">
                 <p>Filter will be included in final version.</p>
+                <div class="col-md-12">
+                    @Html.PagedListPager(Model.Events, page => Url.Action("Index","Event", new { page }))
+                </div>
             </div>
         </div>
     </div>
     <div class="col-md-8">
-        <table class="table">
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.ResultPageData.First().Title)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ResultPageData.First().Description)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ResultPageData.First().Lecturer)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ResultPageData.First().Date)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ResultPageData.First().Start)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ResultPageData.First().End)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ResultPageData.First().Capacity)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ResultPageData.First().Fee)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ResultPageData.First().AddressId)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ResultPageData.First().UserId)
-                </th>
-                <th></th>
-            </tr>
-
-            @foreach (var item in Model.ResultPageData)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Title)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Description)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Lecturer)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Date)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Start)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.End)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Capacity)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Fee)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.AddressId)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.UserId)
-                    </td>
-                    <td>
-                        @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                        @Html.ActionLink("Details", "Detail", new { id = item.Id }) |
-                        @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-                    </td>
-                </tr>
-            }
-
-        </table>
+        @foreach (var item in Model.Events)
+        {
+            <div class="panel panel-info">
+                <div class="panel-heading">@Html.DisplayFor(modelItem => item.Title)</div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="box">
+                                <span class="control-label">
+                                    <strong>@item.Date.Add(@item.Start)</strong>
+                                </span>
+                            </div>
+                            <div class="box">
+                                <span class="control-label">
+                                    @(@item.Description.Length >= 256 ? $"{item.Description.Substring(0, 256)}..." : item.Description)
+                                      @Html.ActionLink("Read more.", "Detail", new { id = item.Id })
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
     </div>
 </div>

@@ -20,9 +20,9 @@ namespace EventManager.PL.Controllers
         public UserFacade UserFacade { get; set; }
         public RegistrationFacade RegistrationFacade { get; set; }
 
-        public ActionResult Index()
+        public ActionResult Index(int page = 1)
         {
-            var events = EventFacade.ListEvents(new EventFilter());
+            var events = EventFacade.ListEvents(new EventFilter { SortCriteria = EventSortCriteria.Date }, page);
             var eventListViewModel = new EventListViewModel
             {
                 Events = new StaticPagedList<EventDTO>(events.ResultPageData, events.RequestedPage, EventFacade.EventPageSize, events.TotalResultCount)
@@ -51,7 +51,34 @@ namespace EventManager.PL.Controllers
             return View(eventDetailViewModel);
         }
 
+        public ActionResult Create()
+        {
+            var addresses = EventFacade.ListAddresses(new AddressFilter());
+            var organizers = UserFacade.ListUsers(new UserFilter());
+            var eventViewModel = new EventViewModel
+            {
+                EventData = new EventDTO(),
+                AddressList = new SelectList(addresses, "Id", "FullAddress"),
+                Organizers = new SelectList(organizers, "Id", "Id")
+            };
+            return View(eventViewModel);
+        }
 
+        [HttpPost]
+        public ActionResult Create(EventViewModel @event)
+        {
+            if (!ModelState.IsValid)
+            {
+                var addresses = EventFacade.ListAddresses(new AddressFilter());
+                var organizers = UserFacade.ListUsers(new UserFilter());
+                @event.AddressList = new SelectList(addresses, "Id", "FullAddress");
+                @event.Organizers = new SelectList(organizers, "Id", "Id");
+                return View(@event);
+            }
+
+            EventFacade.CreateEvent(@event.EventData);
+            return RedirectToAction("Index");
+        }
 
         public ActionResult About()
         {
@@ -117,12 +144,20 @@ namespace EventManager.PL.Controllers
             }
 
             var @event = EventFacade.GetEvent(id);
-            return View(@event);
+            var addresses = EventFacade.ListAddresses(new AddressFilter());
+            var organizers = UserFacade.ListUsers(new UserFilter());
+            var eventViewModel = new EventViewModel
+            {
+                EventData = @event,
+                AddressList = new SelectList(addresses, "Id", "FullAddress"),
+                Organizers = new SelectList(organizers, "Id", "Id")
+            };
+            return View(eventViewModel);
         }
 
         // POST: Address/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, EventDTO @event)
+        public ActionResult Edit(int id, EventViewModel @event)
         {
             if (!ModelState.IsValid)
             {
@@ -131,7 +166,7 @@ namespace EventManager.PL.Controllers
 
             try
             {
-                EventFacade.UpdateEvent(@event);
+                EventFacade.UpdateEvent(@event.EventData);
                 return RedirectToAction("Index");
             }
             catch

@@ -146,6 +146,126 @@ namespace EventManager.DAL
                 }
             });
 
+            context.Events.Add(new Event
+            {
+                Address = address,
+                Title = "Windows 10",
+                Description = "Introduction to new operating system Windows 10. We will look on basic functionality and also some new cool features.",
+                Lecturer = "Fernando Torrez",
+                Date = new DateTime(2016, 2, 1),
+                Start = new TimeSpan(17, 30, 0),
+                End = new TimeSpan(20, 0, 0),
+                EventOrganizer = new EventOrganizer { User = user },
+                Registrations = new List<Registration>
+                {
+                    new Registration
+                    {
+                        State = RegistrationState.Accepted,
+                          User = new User{Role = UserRole.Member }
+                    },
+                    new Registration
+                    {
+                        State = RegistrationState.Accepted,
+                          User = new User{Role = UserRole.Member }
+                    },
+                    new Registration
+                    {
+                        State = RegistrationState.Accepted,
+                          User = new User{Role = UserRole.Member }
+                    }
+                }
+            });
+
+            context.Events.Add(new Event
+            {
+                Address = address,
+                Title = "ASP.NET MVC",
+                Description = lorem,
+                Lecturer = "Fernando Torrez",
+                Date = new DateTime(2016, 7, 20),
+                Start = new TimeSpan(18, 30, 0),
+                End = new TimeSpan(21, 0, 0),
+                EventOrganizer = new EventOrganizer { User = user },
+                Registrations = new List<Registration>
+                {
+                    new Registration
+                    {
+                        State = RegistrationState.Accepted,
+                          User = new User{Role = UserRole.Member }
+                    },
+                    new Registration
+                    {
+                        State = RegistrationState.Accepted,
+                          User = new User{Role = UserRole.Member }
+                    },
+                    new Registration
+                    {
+                        State = RegistrationState.Accepted,
+                          User = new User{Role = UserRole.Member }
+                    }
+                }
+            });
+
+            context.Events.Add(new Event
+            {
+                Address = address,
+                Title = "Unit testing",
+                Description = lorem,
+                Lecturer = "Jiří Novotný",
+                Date = new DateTime(2016, 9, 28),
+                Start = new TimeSpan(15, 30, 0),
+                End = new TimeSpan(17, 0, 0),
+                EventOrganizer = new EventOrganizer { User = new User {Role = UserRole.Organizer} },
+                Registrations = new List<Registration>
+                {
+                    new Registration
+                    {
+                        State = RegistrationState.Accepted,
+                          User = new User{Role = UserRole.Member }
+                    },
+                    new Registration
+                    {
+                        State = RegistrationState.Accepted,
+                          User = new User{Role = UserRole.Member }
+                    },
+                    new Registration
+                    {
+                        State = RegistrationState.Accepted,
+                          User = new User{Role = UserRole.Member }
+                    }
+                }
+            });
+
+            context.Events.Add(new Event
+            {
+                Address = address,
+                Title = ".NET Core",
+                Description = lorem,
+                Lecturer = "Jiří Novotný",
+                Date = new DateTime(2016, 11, 28),
+                Start = new TimeSpan(14, 00, 0),
+                End = new TimeSpan(17, 0, 0),
+                EventOrganizer = new EventOrganizer { User = user },
+                Registrations = new List<Registration>
+                {
+                    new Registration
+                    {
+                        State = RegistrationState.Accepted,
+                          User = new User{Role = UserRole.Member }
+                    },
+                    new Registration
+                    {
+                        State = RegistrationState.Accepted,
+                          User = new User{Role = UserRole.Member }
+                    },
+                    new Registration
+                    {
+                        State = RegistrationState.Accepted,
+                          User = new User{Role = UserRole.Member }
+                    }
+                }
+            });
+
             context.SaveChanges();
         }
     }

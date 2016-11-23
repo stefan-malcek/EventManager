@@ -17,7 +17,7 @@ namespace EventManager.BL.Services.Events
         private readonly UserRepository _userRepository;
         private readonly EventListQuery _eventListQuery;
 
-        public int EventPageSize => 7;
+        public int EventPageSize => 5;
 
         public EventService(EventRepository eventRepository, AddressRepository addressRepository,
             UserRepository userRepository, EventListQuery eventListQuery)
@@ -33,11 +33,12 @@ namespace EventManager.BL.Services.Events
             using (var uow = UnitOfWorkProvider.Create())
             {
                 var @event = Mapper.Map<Event>(eventDto);
+                var organizer = GetOrganizer(eventDto.UserId);
                 @event.Address = GetAddress(eventDto.AddressId);
                 @event.EventOrganizer = new EventOrganizer
                 {
                     Event = @event,
-                    User = GetOrganizer(eventDto.UserId)
+                    User = organizer
                 };
 
                 _eventRepository.Insert(@event);
@@ -112,7 +113,7 @@ namespace EventManager.BL.Services.Events
 
         private User GetOrganizer(int organizerId)
         {
-            var organizer = _userRepository.GetById(organizerId);
+            var organizer = _userRepository.GetById(organizerId, x => x.EventOrganizers);
             if (organizer == null)
             {
                 throw new ArgumentException("Invalid pamater value.", nameof(organizerId));

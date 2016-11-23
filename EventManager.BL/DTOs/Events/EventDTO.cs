@@ -15,7 +15,7 @@ namespace EventManager.BL.DTOs.Events
         [MaxLength(128)]
         public string Lecturer { get; set; }
         [Required]
-        public DateTime Date { get; set; }
+        public DateTime Date { get; set; } = DateTime.Today;
         [Required]
         public TimeSpan Start { get; set; }
         [Required]
