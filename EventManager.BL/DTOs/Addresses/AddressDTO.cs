@@ -19,9 +19,7 @@ namespace EventManager.BL.DTOs.Addresses
         [MaxLength(128)]
         public string City { get; set; }
 
-        public override string ToString()
-        {
-            return $"Building: {Building}, Street: {Street}, StreetNumber: {StreetNumber}, City: {City}";
+        public string FullAddress
+            => $"Building: {Building}, Street: {Street}, StreetNumber: {StreetNumber}, City: {City}";
         }
-    }
 }

@@ -15,5 +15,10 @@ namespace EventManager.BL.DTOs.Users
         [Required]
         public string Email { get; set; }
         public DateTime Birthday { get; set; }
+
+        public override string ToString()
+        {
+            return Id.ToString();
+        }
     }
 }

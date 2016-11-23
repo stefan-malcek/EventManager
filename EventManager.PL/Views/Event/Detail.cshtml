@@ -20,16 +20,24 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="box">
-                                <span class="control-label"><strong>@Model.EventDetail.Event.Date.Add(@Model.EventDetail.Event.Start) - 
-                                @Html.DisplayFor(model => model.EventDetail.Event.End)</strong></span>
+                                <span class="control-label">
+                                    <strong>
+                                        @Model.EventDetail.Event.Date.Add(@Model.EventDetail.Event.Start) -
+                                        @Html.DisplayFor(model => model.EventDetail.Event.End)
+                                    </strong>
+                                </span>
                             </div>
                             <div class="box">
-                                <span class="control-label"><strong>@Html.DisplayNameFor(model => model.Address):</strong> 
-                                @Model.Address.ToString()</span>
+                                <span class="control-label">
+                                    <strong>@Html.DisplayNameFor(model => model.Address):</strong>
+                                    @Html.DisplayFor(model => model.Address.FullAddress)
+                                </span>
                             </div>
                             <div class="box">
-                                <span class="control-label"><strong>@Html.DisplayNameFor(model => model.EventDetail.Event.Lecturer):</strong> 
-                                @Html.DisplayFor(model => model.EventDetail.Event.Lecturer)</span>
+                                <span class="control-label">
+                                    <strong>@Html.DisplayNameFor(model => model.EventDetail.Event.Lecturer):</strong>
+                                    @Html.DisplayFor(model => model.EventDetail.Event.Lecturer)
+                                </span>
                             </div>
                             <div class="box">
                                 <span class="control-label">
@@ -54,18 +62,31 @@
                                 <dd>
                                     @Model.EventDetail.Registrations.Count(c => c.State == RegistrationState.Accepted)
                                 </dd>
-                                <dt>
-                                    Unpaid:
-                                </dt>
-                                <dd>
-                                    @Model.EventDetail.Registrations.Count(c => c.State == RegistrationState.Unpaid)
-                                </dd>
+                                @if (Model.EventDetail.Event.Fee != 0)
+                                {
+                                    <dt>
+                                        Unpaid:
+                                    </dt>
+                                    <dd>
+                                        @Model.EventDetail.Registrations.Count(c => c.State == RegistrationState.Unpaid)
+                                    </dd>
+                                }
                                 <dt>
                                     @Html.DisplayNameFor(model => model.EventDetail.Event.Capacity):
                                 </dt>
-                                <dd>
-                                    @Html.DisplayFor(model => model.EventDetail.Event.Capacity)
-                                </dd>
+
+                                @if (Model.EventDetail.Event.Capacity.HasValue)
+                                {
+                                    <dd>
+                                        @Html.DisplayFor(model => model.EventDetail.Event.Capacity)
+                                    </dd>
+                                }
+                                else
+                                {
+                                    <dd>
+                                        unlimited
+                                    </dd>
+                                }
                                 <dt>
                                     @Html.DisplayNameFor(model => model.EventDetail.Event.Fee):
                                 </dt>
@@ -94,7 +115,7 @@
                                         <input type="button" class="btn btn-primary" value="Pay fee"
                                                onclick="location.href = '@Url.Action("Pay", "Payment", new
                                                                      {
-                                                                         registrationid = Model.EventDetail.Registrations.FirstOrDefault(f => f.EventId == Model.EventDetail.Event.Id 
+                                                                         registrationid = Model.EventDetail.Registrations.FirstOrDefault(f => f.EventId == Model.EventDetail.Event.Id
                                                                          && f.UserId == 2)?.Id ?? 0,
                                                                          eventId = Model.EventDetail.Event.Id
                                                                      })'" />
