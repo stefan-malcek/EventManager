@@ -63,6 +63,7 @@
     <Compile Include="Entities\Address.cs" />
     <Compile Include="Entities\EventReview.cs" />
     <Compile Include="Entities\EventOrganizer.cs" />
+    <Compile Include="Entities\UserAccount.cs" />
     <Compile Include="Enums\RegistrationState.cs" />
     <Compile Include="EventManagerDbInitializer.cs" />
     <Compile Include="Entities\Registration.cs" />
