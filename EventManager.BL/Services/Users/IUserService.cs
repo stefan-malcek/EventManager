@@ -1,12 +1,15 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using EventManager.BL.DTOs.Filters;
+using EventManager.BL.DTOs.Registrations;
+using EventManager.BL.DTOs.UserAccounts;
 using EventManager.BL.DTOs.Users;
 
 namespace EventManager.BL.Services.Users
 {
     public interface IUserService
     {
-        void CreateUser(UserCreateDTO userDto);
+        void CreateUser(UserRegistrationDTO userDto, Guid accountId);
 
         void UpdateUser(UserDTO userDto);
 

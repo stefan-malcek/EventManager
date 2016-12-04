@@ -39,7 +39,7 @@ namespace EventManager.PL
             AutoMapperConfig.Initialize();
 
             // initialize default user accounts (admin, ...)
-            // UserAccountInit.InitializeUserAccounts(container);
+            UserAccountInit.InitializeUserAccounts(_container);
 
             // set controller factory
             var controllerFactory = new WindsorControllerFactory(_container.Kernel);

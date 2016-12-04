@@ -20,6 +20,6 @@ namespace EventManager.DAL.Entities
         [MaxLength(1024)]
         public virtual string Address { get; set; }
         
-        public virtual DateTime BirthDate { get; set; } = new DateTime(1980, 1, 1);
+        public virtual DateTime Birthday { get; set; } = new DateTime(1980, 1, 1);
     }
 }

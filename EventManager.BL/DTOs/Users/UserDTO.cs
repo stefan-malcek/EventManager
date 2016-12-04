@@ -6,13 +6,10 @@ namespace EventManager.BL.DTOs.Users
 {
     public class UserDTO
     {
-        [Required]
         public int Id { get; set; }
-        [Required]
-        public string Name { get; set; }
-        [Required]
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
         public UserRole Role { get; set; }
-        [Required]
         public string Email { get; set; }
         public DateTime Birthday { get; set; }
 

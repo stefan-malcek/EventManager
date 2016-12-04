@@ -47,7 +47,8 @@ namespace EventManager.BL.TestData
         {
             return new UserCreateDTO
             {
-                Name = "Petr Had",
+                FirstName = "Petr",
+                LastName = " Had",
                 Birthday = new DateTime(1987, 7, 2),
                 Role = UserRole.Member
             };
@@ -58,7 +59,8 @@ namespace EventManager.BL.TestData
             return
                 new UserCreateDTO
                 {
-                    Name = "Jan Novák",
+                    FirstName = "Jan",
+                    LastName = "Novak",
                     Birthday = new DateTime(1988, 8, 4),
                     Role = UserRole.Organizer
                 };
@@ -68,7 +70,8 @@ namespace EventManager.BL.TestData
         {
             return new UserCreateDTO
             {
-                Name = "Petr Had",
+                FirstName = "Petr",
+                LastName = " Had",
                 Birthday = new DateTime(1987, 7, 2),
                 Role = UserRole.Member
             };

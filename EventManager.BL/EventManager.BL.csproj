@@ -76,6 +76,7 @@
     <Compile Include="AppEfConfiguration\AppQuery.cs" />
     <Compile Include="AppEfConfiguration\AppUnitOfWork.cs" />
     <Compile Include="AppEfConfiguration\AppUnitOfWorkProvider.cs" />
+    <Compile Include="Bootstrap\UserAccountInit.cs" />
     <Compile Include="DTOs\Addresses\AddressCreateDTO.cs" />
     <Compile Include="DTOs\Addresses\AddressDTO.cs" />
     <Compile Include="DTOs\EventReviews\EventReviewDTO.cs" />
@@ -92,11 +93,15 @@
     <Compile Include="DTOs\PagedListResultDTO.cs" />
     <Compile Include="DTOs\Registrations\RegistrationCreateDTO.cs" />
     <Compile Include="DTOs\Registrations\RegistrationDTO.cs" />
+    <Compile Include="DTOs\UserAccounts\UserAccountDTO.cs" />
+    <Compile Include="DTOs\UserAccounts\UserLoginDTO.cs" />
+    <Compile Include="DTOs\UserAccounts\UserRegistrationDTO.cs" />
     <Compile Include="DTOs\Users\UserCreateDTO.cs" />
     <Compile Include="DTOs\Users\UserDTO.cs" />
     <Compile Include="Facades\EventFacade.cs" />
     <Compile Include="Facades\RegistrationFacade.cs" />
     <Compile Include="Facades\UserFacade.cs" />
+    <Compile Include="Miscellaneous\AccountPolicy\Claims.cs" />
     <Compile Include="Miscellaneous\DateTimeProvider\DateTimeProvider.cs" />
     <Compile Include="Miscellaneous\DateTimeProvider\IDateTimeProvider.cs" />
     <Compile Include="Miscellaneous\EventExtensions.cs" />
@@ -112,6 +117,8 @@
     <Compile Include="Repositories\EventRepository.cs" />
     <Compile Include="Repositories\EventReviewRepository.cs" />
     <Compile Include="Repositories\RegistrationRepository.cs" />
+    <Compile Include="Repositories\UserAccount\UserAccountManager.cs" />
+    <Compile Include="Repositories\UserAccount\UserAccountRepository.cs" />
     <Compile Include="Repositories\UserRepository.cs" />
     <Compile Include="Services\Addresses\AddressService.cs" />
     <Compile Include="Services\Addresses\IAddressService.cs" />
@@ -122,6 +129,9 @@
     <Compile Include="Services\Registrations\RegistrationService.cs" />
     <Compile Include="Services\Reviews\IReviewService.cs" />
     <Compile Include="Services\Reviews\ReviewService.cs" />
+    <Compile Include="Services\UserAccounts\AuthenticationWrapper.cs" />
+    <Compile Include="Services\UserAccounts\AppUserService.cs" />
+    <Compile Include="Services\UserAccounts\IAppUserService.cs" />
     <Compile Include="Services\Users\IUserService.cs" />
     <Compile Include="Services\Users\UserService.cs" />
   </ItemGroup>

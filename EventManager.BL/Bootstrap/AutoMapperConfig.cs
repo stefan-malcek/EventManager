@@ -3,6 +3,7 @@ using EventManager.BL.DTOs.Addresses;
 using EventManager.BL.DTOs.EventReviews;
 using EventManager.BL.DTOs.Events;
 using EventManager.BL.DTOs.Registrations;
+using EventManager.BL.DTOs.UserAccounts;
 using EventManager.BL.DTOs.Users;
 using EventManager.DAL.Entities;
 
@@ -27,6 +28,21 @@ namespace EventManager.BL.Bootstrap
                     .ReverseMap();
 
                 config.CreateMap<UserCreateDTO, User>();
+
+                config.CreateMap<User, UserDTO>()
+                    .ForMember(dest => dest.Email, opts => opts.MapFrom(src => src.Account.Email))
+                    .ForMember(dest => dest.FirstName, opts => opts.MapFrom(src => src.Account.FirstName))
+                    .ForMember(dest => dest.LastName, opts => opts.MapFrom(src => src.Account.LastName))
+                    //.ForMember(dest => dest.MobilePhoneNumber, opts => opts.MapFrom(src => src.Account.MobilePhoneNumber))
+                    //.ForMember(dest => dest.Address, opts => opts.MapFrom(src => src.Account.Address))
+                    .ForMember(dest => dest.Birthday, opts => opts.MapFrom(src => src.Account.Birthday))
+                    .ReverseMap();
+
+                config.CreateMap<UserAccount, UserAccountDTO>()
+                   .ForMember(d => d.Id, opt => opt.MapFrom(s => s.ID))
+                .ReverseMap();
+
+                config.CreateMap<UserRegistrationDTO, UserAccount>();
 
                 //event
                 config.CreateMap<Event, EventDTO>()

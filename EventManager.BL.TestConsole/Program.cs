@@ -100,7 +100,7 @@ namespace EventManager.BL.TestConsole
 
             //create
             Console.Write("Create - ");
-            _userService.CreateUser(Factory.GetMember1());
+           // _userService.CreateUser(Factory.GetMember1());
 
             //get
             var user = _userService.GetUser(1);
@@ -119,7 +119,7 @@ namespace EventManager.BL.TestConsole
             //list
             Console.Write("Listing - ");
             //arrange
-            _userService.CreateUser(Factory.GetOrganizer());
+           // _userService.CreateUser(Factory.GetOrganizer());
             //act
             var users = _userService.ListUsers(new UserFilter());
             //assert
@@ -219,7 +219,7 @@ namespace EventManager.BL.TestConsole
             _registrationService = _container.Resolve<IRegistrationService>();
 
             //create valid
-            _userService.CreateUser(Factory.GetMember2());
+           // _userService.CreateUser(Factory.GetMember2());
             _registrationService.Register(Factory.GetValidRegistration());
 
             var registration = _registrationService.GetRegistration(1);
