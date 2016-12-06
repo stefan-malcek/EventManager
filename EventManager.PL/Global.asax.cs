@@ -7,6 +7,8 @@ using System.Web.Optimization;
 using System.Web.Routing;
 using Castle.Windsor;
 using EventManager.BL.Bootstrap;
+using System.Security.Claims;
+using System.Web.Helpers;
 
 namespace EventManager.PL
 {
@@ -21,6 +23,8 @@ namespace EventManager.PL
 
         protected void Application_Start()
         {
+            AntiForgeryConfig.UniqueClaimTypeIdentifier = ClaimTypes.NameIdentifier;
+
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);

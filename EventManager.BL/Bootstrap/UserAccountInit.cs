@@ -41,7 +41,7 @@ namespace EventManager.BL.Bootstrap
                 Password = "123456"
             }, true);
 
-            userFacade.RegisterCustomer(new UserRegistrationDTO
+            userFacade.RegisterUser(new UserRegistrationDTO
             {
                 Birthday = new DateTime(1990, 9, 20),
                 Email = "hadodrakp@atlas.sk",
@@ -50,7 +50,7 @@ namespace EventManager.BL.Bootstrap
                 Password = "SecretPa$$" // same for the email account
             }, out success);
 
-            userFacade.RegisterCustomer(new UserRegistrationDTO
+            userFacade.RegisterUser(new UserRegistrationDTO
             {
                 Birthday = new DateTime(1985, 11, 6),
                 Email = "drakohad@atlas.sk", // password: SecretPa$$

@@ -11,30 +11,23 @@ namespace EventManager.BL.Services.UserAccounts
     public class AuthenticationWrapper : AuthenticationService<DAL.Entities.UserAccount>
     {
         #region tokenActions
-
         private Action<ClaimsPrincipal, TimeSpan?, bool?> issueTokenAction;
 
         private Action revokeTokenAction;
-
         #endregion
 
         public AuthenticationWrapper(UserAccountService<DAL.Entities.UserAccount> userService)
             : base(userService)
-        {
-        }
+        { }
 
-        public AuthenticationWrapper(UserAccountService<DAL.Entities.UserAccount> userService,
-            ClaimsAuthenticationManager claimsAuthenticationManager) : base(userService, claimsAuthenticationManager)
-        {
-        }
+        public AuthenticationWrapper(UserAccountService<DAL.Entities.UserAccount> userService, ClaimsAuthenticationManager claimsAuthenticationManager) : base(userService, claimsAuthenticationManager) { }
 
-        protected override ClaimsPrincipal GetCurentPrincipal()
-        {
-            return ClaimsPrincipal.Current;
-        }
+        //public override ClaimsPrincipal GetCurentPrincipal()
+        //{
+        //    return ClaimsPrincipal.Current;
+        //}
 
         #region TokensManagement
-
         public void InitializeIssueTokenAction(Action<ClaimsPrincipal, TimeSpan?, bool?> action)
         {
             if (issueTokenAction == null)
@@ -51,8 +44,12 @@ namespace EventManager.BL.Services.UserAccounts
             }
         }
 
-        protected override void IssueToken(ClaimsPrincipal principal, TimeSpan? tokenLifetime = null,
-            bool? persistentCookie = null)
+        protected override ClaimsPrincipal GetCurentPrincipal()
+        {
+            return ClaimsPrincipal.Current;
+        }
+
+        protected override void IssueToken(ClaimsPrincipal principal, TimeSpan? tokenLifetime = null, bool? persistentCookie = null)
         {
             if (issueTokenAction == null)
             {
@@ -69,11 +66,9 @@ namespace EventManager.BL.Services.UserAccounts
             }
             revokeTokenAction.Invoke();
         }
-
         #endregion
 
         #region SignInManagement
-
         public void PerformSignIn(Guid userId, bool rememberMe)
         {
             SignIn(userId, rememberMe);
@@ -83,7 +78,6 @@ namespace EventManager.BL.Services.UserAccounts
         {
             SignOut();
         }
-
         #endregion
     }
 }

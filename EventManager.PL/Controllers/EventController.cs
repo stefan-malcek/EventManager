@@ -94,6 +94,7 @@ namespace EventManager.PL.Controllers
             return View();
         }
 
+        [Authorize]
         public ActionResult Register(int userid, int eventid)
         {
             if (eventid <= 0)
