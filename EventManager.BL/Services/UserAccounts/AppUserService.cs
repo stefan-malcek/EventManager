@@ -13,7 +13,7 @@ namespace EventManager.BL.Services.UserAccounts
     {
         private readonly UserAccountService<DAL.Entities.UserAccount> mCoreService;
 
-        public AppUserService(UserAccountService<DAL.Entities.UserAccount> service, IRepo)
+        public AppUserService(UserAccountService<DAL.Entities.UserAccount> service)
         {
             mCoreService = service;
         }
@@ -70,9 +70,7 @@ namespace EventManager.BL.Services.UserAccounts
             using (UnitOfWorkProvider.Create())
             {
                 Claim userClaim;
-
                 
-
                 switch (role)
                 {
                     case Claims.Admin:

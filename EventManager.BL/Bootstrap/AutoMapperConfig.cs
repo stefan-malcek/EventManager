@@ -22,11 +22,11 @@ namespace EventManager.BL.Bootstrap
                      .ReverseMap();
 
                 config.CreateMap<AddressCreateDTO, Address>();
-                
+
 
                 config.CreateMap<UserRegistrationDTO, UserAccount>();
                 config.CreateMap<UserRegistrationDTO, User>();
-               // config.CreateMap<UserCreateDTO, User>();
+                // config.CreateMap<UserCreateDTO, User>();
 
                 config.CreateMap<User, UserDTO>()
                     .ForMember(d => d.Id, opt => opt.MapFrom(s => s.ID))
@@ -34,10 +34,16 @@ namespace EventManager.BL.Bootstrap
                     .ForMember(dest => dest.FirstName, opts => opts.MapFrom(src => src.Account.FirstName))
                     .ForMember(dest => dest.LastName, opts => opts.MapFrom(src => src.Account.LastName))
                     .ForMember(dest => dest.Birthday, opts => opts.MapFrom(src => src.Account.Birthday))
+                     .ForMember(d => d.Role, opt => opt.MapFrom(s => s.Account.ClaimCollection.FirstOrDefault().Value))
                     .ReverseMap();
 
-                config.CreateMap<User, UserDTO>()
-                    .ForMember(d => d.Role, opt => opt.MapFrom(s => s.Account.ClaimCollection.First().Value));
+                //config.CreateMap<User, UserDTO>()
+                //.ForMember(d => d.Id, opt => opt.MapFrom(s => s.ID))
+                //    .ForMember(dest => dest.Email, opts => opts.MapFrom(src => src.Account.Email))
+                //    .ForMember(dest => dest.FirstName, opts => opts.MapFrom(src => src.Account.FirstName))
+                //    .ForMember(dest => dest.LastName, opts => opts.MapFrom(src => src.Account.LastName))
+                //    .ForMember(dest => dest.Birthday, opts => opts.MapFrom(src => src.Account.Birthday))
+                //    .ForMember(d => d.Role, opt => opt.MapFrom(s => s.Account.ClaimCollection.FirstOrDefault().Value));
                 //config.CreateMap<UserDTO, User>()
                 //.ForMember(d => d.ID, opt => opt.MapFrom(s => s.Id))
                 //.for

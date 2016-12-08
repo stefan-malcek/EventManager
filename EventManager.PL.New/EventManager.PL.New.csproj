@@ -165,6 +165,9 @@
       <HintPath>..\packages\X.PagedList.5.3.0.5300\lib\portable-net45+wp8+win8\X.PagedList.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="X.PagedList.Mvc">
+      <HintPath>..\packages\X.PagedList.Mvc.5.3.0.5300\lib\net46\X.PagedList.Mvc.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json">
@@ -224,6 +227,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AddressController.cs" />
+    <Compile Include="Controllers\Admin\UserController.cs" />
     <Compile Include="Controllers\EventController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PaymentController.cs" />
@@ -241,6 +245,7 @@
     <Compile Include="ViewModels\Events\EventDetailViewModel.cs" />
     <Compile Include="ViewModels\Events\EventListViewModel.cs" />
     <Compile Include="ViewModels\Events\EventViewModel.cs" />
+    <Compile Include="ViewModels\Users\UserViewModel.cs" />
     <Compile Include="WindsorControllerFactory.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -317,6 +322,8 @@
     <Content Include="Views\Event\Index.cshtml" />
     <Content Include="Views\Index.cshtml" />
     <Content Include="Views\Payment\Pay.cshtml" />
+    <Content Include="Views\User\Index.cshtml" />
+    <Content Include="Views\User\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -330,6 +337,10 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\EventManager.AccountPolicy\EventManager.AccountPolicy.csproj">
+      <Project>{138459db-29cb-435b-9141-5143beedcd8e}</Project>
+      <Name>EventManager.AccountPolicy</Name>
+    </ProjectReference>
     <ProjectReference Include="..\EventManager.BL\EventManager.BL.csproj">
       <Project>{e5ec8b2e-0d8f-49ca-847f-c55393313804}</Project>
       <Name>EventManager.BL</Name>

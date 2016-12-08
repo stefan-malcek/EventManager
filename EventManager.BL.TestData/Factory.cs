@@ -43,39 +43,39 @@ namespace EventManager.BL.TestData
             };
         }
 
-        public static UserCreateDTO GetMember1()
-        {
-            return new UserCreateDTO
-            {
-                FirstName = "Petr",
-                LastName = " Had",
-                Birthday = new DateTime(1987, 7, 2),
-                Role = UserRole.Member
-            };
-        }
+        //public static UserCreateDTO GetMember1()
+        //{
+        //    return new UserCreateDTO
+        //    {
+        //        FirstName = "Petr",
+        //        LastName = " Had",
+        //        Birthday = new DateTime(1987, 7, 2),
+        //        Role = UserRole.Member
+        //    };
+        //}
 
-        public static UserCreateDTO GetOrganizer()
-        {
-            return
-                new UserCreateDTO
-                {
-                    FirstName = "Jan",
-                    LastName = "Novak",
-                    Birthday = new DateTime(1988, 8, 4),
-                    Role = UserRole.Organizer
-                };
-        }
+        //public static UserCreateDTO GetOrganizer()
+        //{
+        //    return
+        //        new UserCreateDTO
+        //        {
+        //            FirstName = "Jan",
+        //            LastName = "Novak",
+        //            Birthday = new DateTime(1988, 8, 4),
+        //            Role = UserRole.Organizer
+        //        };
+        //}
 
-        public static UserCreateDTO GetMember2()
-        {
-            return new UserCreateDTO
-            {
-                FirstName = "Petr",
-                LastName = " Had",
-                Birthday = new DateTime(1987, 7, 2),
-                Role = UserRole.Member
-            };
-        }
+        //public static UserCreateDTO GetMember2()
+        //{
+        //    return new UserCreateDTO
+        //    {
+        //        FirstName = "Petr",
+        //        LastName = " Had",
+        //        Birthday = new DateTime(1987, 7, 2),
+        //        Role = UserRole.Member
+        //    };
+        //}
 
         public static EventDTO GetEvent1()
         {

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
+using Castle.Core.Internal;
 using EventManager.BL.DTOs.Filters;
 using EventManager.BL.DTOs.Registrations;
 using EventManager.BL.DTOs.UserAccounts;
@@ -44,12 +45,12 @@ namespace EventManager.BL.Services.Users
         {
             using (var uow = UnitOfWorkProvider.Create())
             {
-                var user = _userRepository.GetById(userDto.Id, i => i.Account);
+                var user = _userRepository.GetById(userDto.Id, i => i.Account, i => i.EventOrganizers);
                 Mapper.Map(userDto, user);
                 _userRepository.Update(user);
                 uow.Commit();
 
-                return user.Account.ID;
+                return user.EventOrganizers.IsNullOrEmpty() ? user.Account.ID : new Guid();
             }
         }
 

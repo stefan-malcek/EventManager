@@ -11,6 +11,7 @@ namespace EventManager.BL.DTOs.Users
         public string LastName { get; set; }
         public string Role { get; set; }
         public string Email { get; set; }
+        //[DataType(DataType.Date)]
         public DateTime Birthday { get; set; }
 
         public override string ToString()
