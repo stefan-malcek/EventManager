@@ -78,6 +78,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\EventManager.AccountPolicy\EventManager.AccountPolicy.csproj">
+      <Project>{138459db-29cb-435b-9141-5143beedcd8e}</Project>
+      <Name>EventManager.AccountPolicy</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Riganti.Utils.Infrastructure.Core\Riganti.Utils.Infrastructure.Core.csproj">
       <Project>{43943d75-b4c8-4152-80cf-e6510bf3db23}</Project>
       <Name>Riganti.Utils.Infrastructure.Core</Name>

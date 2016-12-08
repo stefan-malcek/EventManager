@@ -2,6 +2,7 @@
 using System.Data.Entity;
 using BrockAllen.MembershipReboot;
 using Castle.MicroKernel.Registration;
+using Castle.MicroKernel.Resolvers.SpecializedResolvers;
 using Castle.MicroKernel.SubSystems.Configuration;
 using Castle.Windsor;
 using EventManager.BL.AppEfConfiguration;
@@ -42,7 +43,7 @@ namespace EventManager.BL.Bootstrap
                     .DependsOn(Dependency.OnComponent<IUserAccountRepository<UserAccount>, UserAccountManager>())
                     .LifestyleTransient(),
 
-                 Component.For<AuthenticationWrapper>()
+                Component.For<AuthenticationWrapper>()
                     .ImplementedBy<AuthenticationWrapper>()
                     .DependsOn(Dependency.OnComponent<UserAccountService<UserAccount>, UserAccountService<UserAccount>>())
                     .LifestyleTransient(),
@@ -68,8 +69,12 @@ namespace EventManager.BL.Bootstrap
                     .Instance(new DateTimeProvider())
                     .LifestyleSingleton(),
 
-                Classes.FromThisAssembly().InNamespace("EventManager.BL.Facades")
+                Classes.FromThisAssembly()
+                .InNamespace("EventManager.BL.Facades")
+                .LifestyleTransient()
                 );
+
+            container.Kernel.Resolver.AddSubResolver(new CollectionResolver(container.Kernel));
         }
     }
 }

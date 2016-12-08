@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.Linq;
+using AutoMapper;
 using EventManager.BL.DTOs.Addresses;
 using EventManager.BL.DTOs.EventReviews;
 using EventManager.BL.DTOs.Events;
@@ -21,22 +22,25 @@ namespace EventManager.BL.Bootstrap
                      .ReverseMap();
 
                 config.CreateMap<AddressCreateDTO, Address>();
+                
 
-                //user
+                config.CreateMap<UserRegistrationDTO, UserAccount>();
+                config.CreateMap<UserRegistrationDTO, User>();
+               // config.CreateMap<UserCreateDTO, User>();
+
                 config.CreateMap<User, UserDTO>()
                     .ForMember(d => d.Id, opt => opt.MapFrom(s => s.ID))
-                    .ReverseMap();
-
-                config.CreateMap<UserCreateDTO, User>();
-
-                config.CreateMap<User, UserDTO>()
                     .ForMember(dest => dest.Email, opts => opts.MapFrom(src => src.Account.Email))
                     .ForMember(dest => dest.FirstName, opts => opts.MapFrom(src => src.Account.FirstName))
                     .ForMember(dest => dest.LastName, opts => opts.MapFrom(src => src.Account.LastName))
-                    //.ForMember(dest => dest.MobilePhoneNumber, opts => opts.MapFrom(src => src.Account.MobilePhoneNumber))
-                    //.ForMember(dest => dest.Address, opts => opts.MapFrom(src => src.Account.Address))
                     .ForMember(dest => dest.Birthday, opts => opts.MapFrom(src => src.Account.Birthday))
                     .ReverseMap();
+
+                config.CreateMap<User, UserDTO>()
+                    .ForMember(d => d.Role, opt => opt.MapFrom(s => s.Account.ClaimCollection.First().Value));
+                //config.CreateMap<UserDTO, User>()
+                //.ForMember(d => d.ID, opt => opt.MapFrom(s => s.Id))
+                //.for
 
                 config.CreateMap<UserAccount, UserAccountDTO>()
                    .ForMember(d => d.Id, opt => opt.MapFrom(s => s.ID))

@@ -1,7 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Riganti.Utils.Infrastructure.EntityFramework;
 using System.Data.Entity;
+using System.Data.Entity.Validation;
 using System.Diagnostics;
+using System.Linq;
 using EventManager.DAL.Entities;
 using UserAccount = EventManager.DAL.Entities.UserAccount;
 
@@ -12,9 +14,9 @@ namespace EventManager.DAL
         public EventManagerDbContext() : base("EventManagerDBContext")
         {
             Database.SetInitializer(new EventManagerDbInitializer());
-          
-                this.RegisterUserAccountChildTablesForDelete<UserAccount>();
-           
+
+            this.RegisterUserAccountChildTablesForDelete<UserAccount>();
+            Database.Log = s => Debug.WriteLine(s);
         }
 
         public DbSet<Address> Addresses { get; set; }
@@ -36,9 +38,26 @@ namespace EventManager.DAL
 
         public override int SaveChanges()
         {
+            try
+            {
+                return base.SaveChanges();
+            }
+            catch (DbEntityValidationException ex)
+            {
+                // Retrieves the error messages as a list of strings.
+                var errorMessages = ex.EntityValidationErrors
+                        .SelectMany(x => x.ValidationErrors)
+                        .Select(x => x.ErrorMessage);
 
-            return base.SaveChanges();
+                // Joins the list to a single string.
+                var fullErrorMessage = string.Join("; ", errorMessages);
 
+                // Combines the original exception message with the new one.
+                var exceptionMessage = string.Concat(ex.Message, " The validation errors are: ", fullErrorMessage);
+
+                // Throws a new DbEntityValidationException with the improved exception message.
+                throw new DbEntityValidationException(exceptionMessage, ex.EntityValidationErrors);
+            }
         }
     }
 }

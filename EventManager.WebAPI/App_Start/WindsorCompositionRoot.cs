@@ -4,7 +4,7 @@ using System.Web.Http.Controllers;
 using System.Web.Http.Dispatcher;
 using Castle.Windsor;
 
-namespace EventManager.WebAPI.App_Start
+namespace EventManager.WebAPI
 {
     /// <summary>
     /// Adapter for Castle Windsor.

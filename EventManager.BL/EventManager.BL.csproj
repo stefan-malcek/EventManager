@@ -101,7 +101,6 @@
     <Compile Include="Facades\EventFacade.cs" />
     <Compile Include="Facades\RegistrationFacade.cs" />
     <Compile Include="Facades\UserFacade.cs" />
-    <Compile Include="Miscellaneous\AccountPolicy\Claims.cs" />
     <Compile Include="Miscellaneous\DateTimeProvider\DateTimeProvider.cs" />
     <Compile Include="Miscellaneous\DateTimeProvider\IDateTimeProvider.cs" />
     <Compile Include="Miscellaneous\EventExtensions.cs" />
@@ -111,6 +110,7 @@
     <Compile Include="Queries\EventListQuery.cs" />
     <Compile Include="Queries\EventReviewListQuery.cs" />
     <Compile Include="Queries\RegistrationListQuery.cs" />
+    <Compile Include="Queries\UserAccordingToEmailQuery.cs" />
     <Compile Include="Queries\UserListQuery.cs" />
     <Compile Include="Repositories\AddressRepository.cs" />
     <Compile Include="Repositories\EventOrganizerRepository.cs" />
@@ -136,6 +136,10 @@
     <Compile Include="Services\Users\UserService.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\EventManager.AccountPolicy\EventManager.AccountPolicy.csproj">
+      <Project>{138459DB-29CB-435B-9141-5143BEEDCD8E}</Project>
+      <Name>EventManager.AccountPolicy</Name>
+    </ProjectReference>
     <ProjectReference Include="..\EventManager.DAL\EventManager.DAL.csproj">
       <Project>{7a875f5c-4117-4a67-8738-a7660aa77d99}</Project>
       <Name>EventManager.DAL</Name>

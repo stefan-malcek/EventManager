@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EventManager.BL.Miscellaneous.AccountPolicy
+namespace EventManager.AccountPolicy
 {
     /// <summary>
     /// Defines various roles used within authentication

@@ -1,5 +1,9 @@
-﻿using System.Linq;
+﻿using System.Data.Entity;
+using System.Linq;
+using System.Security.Claims;
 using AutoMapper.QueryableExtensions;
+using BrockAllen.MembershipReboot;
+using BrockAllen.MembershipReboot.Relational;
 using EventManager.BL.AppEfConfiguration;
 using EventManager.BL.DTOs.Filters;
 using EventManager.BL.DTOs.Users;
@@ -18,9 +22,9 @@ namespace EventManager.BL.Queries
         {
             IQueryable<User> query = Context.Users;
 
-            if (Filter.Role.HasValue)
+            if (!string.IsNullOrEmpty(Filter.Role))
             {
-                query = query.Where(w => w.Role == Filter.Role);
+                query = query.Where(w => w.Account.ClaimCollection.Any(a => Equals(a.Value, Filter.Role)));
             }
 
             return query.ProjectTo<UserDTO>();

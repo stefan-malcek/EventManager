@@ -10,7 +10,6 @@ using System.Web.Optimization;
 using System.Web.Routing;
 using Castle.Windsor;
 using EventManager.BL.Bootstrap;
-using EventManager.WebAPI.App_Start;
 
 namespace EventManager.WebAPI
 {

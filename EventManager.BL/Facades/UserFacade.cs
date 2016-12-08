@@ -34,7 +34,8 @@ namespace EventManager.BL.Facades
         /// <param name="userDto">user</param>
         public void UpdateUser(UserDTO userDto)
         {
-            _userService.UpdateUser(userDto);
+            var accountGuid = _userService.UpdateUser(userDto);
+            _appUserService.UpdateUserRole(accountGuid, userDto.Role);
         }
 
         /// <summary>
@@ -61,10 +62,10 @@ namespace EventManager.BL.Facades
         /// </summary>
         /// <param name="mail">mail of user</param>
         /// <returns>user</returns>
-        public UserDTO GetUserAccordingToMail(string mail)
-        {
-            return _userService.GetUserAccortingToEmail(mail);
-        }
+        //public UserDTO GetUserAccordingToMail(string mail)
+        //{
+        //    return _userService.GetUserAccortingToEmail(mail);
+        //}
 
         /// <summary>
         /// List users with given filter.
@@ -90,7 +91,7 @@ namespace EventManager.BL.Facades
                 return new Guid();
             }
             var accountId = _appUserService.RegisterUserAccount(registrationDto);
-         _userService.CreateUser(registrationDto, accountId);
+            _userService.CreateUser(registrationDto, accountId);
             success = true;
             return accountId;
         }

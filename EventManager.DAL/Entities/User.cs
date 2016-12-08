@@ -13,7 +13,7 @@ namespace EventManager.DAL.Entities
     {
         public int ID { get; set; }
         [Required]
-        public UserRole Role { get; set; }
+        //public UserRole Role { get; set; }
         //[Required] cannot initialize db with this attribute
         public virtual UserAccount Account { get; set; }
         public virtual List<Registration> Registrations { get; set; }

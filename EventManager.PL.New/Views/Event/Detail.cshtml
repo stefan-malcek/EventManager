@@ -1,0 +1,199 @@
+﻿@using EventManager.DAL.Enums
+@model EventManager.PL.ViewModels.Events.EventDetailViewModel
+
+@{
+    ViewBag.Title = "Detail";
+}
+
+<div class="col-md-offset-1">
+    <h2>@Html.DisplayFor(model => model.EventDetail.Event.Title)</h2>
+    <div class="row">
+        <div class="col-md-4">
+            <p>
+                @Html.DisplayFor(model => model.EventDetail.Event.Description)
+            </p>
+        </div>
+        <div class="col-md-4 col-md-offset-1">
+            <div class="panel panel-info">
+                <div class="panel-heading">Time and Address</div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="box">
+                                <span class="control-label">
+                                    <strong>
+                                        @Model.EventDetail.Event.Date.Add(@Model.EventDetail.Event.Start) -
+                                        @Html.DisplayFor(model => model.EventDetail.Event.End)
+                                    </strong>
+                                </span>
+                            </div>
+                            <div class="box">
+                                <span class="control-label">
+                                    <strong>@Html.DisplayNameFor(model => model.Address):</strong>
+                                    @Html.DisplayFor(model => model.Address.FullAddress)
+                                </span>
+                            </div>
+                            <div class="box">
+                                <span class="control-label">
+                                    <strong>@Html.DisplayNameFor(model => model.EventDetail.Event.Lecturer):</strong>
+                                    @Html.DisplayFor(model => model.EventDetail.Event.Lecturer)
+                                </span>
+                            </div>
+                            <div class="box">
+                                <span class="control-label">
+                                    <strong>@Html.DisplayNameFor(model => model.Organizer):</strong>
+                                    @Html.DisplayFor(model => model.Organizer.Id)
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                @if (!Model.EventDetail.IsEnded)
+            {
+                    <div class="panel-heading">Registrations</div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <dl class="dl-horizontal">
+                                <dt>
+                                    Accepted:
+                                </dt>
+                                <dd>
+                                    @Model.EventDetail.Registrations.Count(c => c.State == RegistrationState.Accepted)
+                                </dd>
+                                @if (Model.EventDetail.Event.Fee != 0)
+                                {
+                                    <dt>
+                                        Unpaid:
+                                    </dt>
+                                    <dd>
+                                        @Model.EventDetail.Registrations.Count(c => c.State == RegistrationState.Unpaid)
+                                    </dd>
+                                }
+                                <dt>
+                                    @Html.DisplayNameFor(model => model.EventDetail.Event.Capacity):
+                                </dt>
+
+                                @if (Model.EventDetail.Event.Capacity.HasValue)
+                                {
+                                    <dd>
+                                        @Html.DisplayFor(model => model.EventDetail.Event.Capacity)
+                                    </dd>
+                                }
+                                else
+                                {
+                                    <dd>
+                                        unlimited
+                                    </dd>
+                                }
+                                <dt>
+                                    @Html.DisplayNameFor(model => model.EventDetail.Event.Fee):
+                                </dt>
+
+                                <dd>
+                                    @Html.DisplayFor(model => model.EventDetail.Event.Fee)
+                                </dd>
+                            </dl>
+                            <p class="text-center">
+                                @if (Model.EventDetail.Registrations.All(a => a.UserId != 2))
+                                {
+                                    <input type="button" class="btn btn-primary" value="Register"
+                                           onclick="location.href = '@Url.Action("Register", "Event", new {userId = 2, eventId = Model.EventDetail.Event.Id})'" />
+                                }
+                                else
+                                {
+                                    <input type="button" class="btn btn-danger" value="Unregister"
+                                           onclick="location.href = '@Url.Action("Unregister", "Event", new
+                                                                 {
+                                                                     registrationid = Model.EventDetail.Registrations.FirstOrDefault(f => f.UserId == 2)?.Id ?? 0,
+                                                                     eventId = Model.EventDetail.Event.Id
+                                                                 })'" />
+
+                                    if (Model.EventDetail.Event.Fee != 0 && Model.EventDetail.Registrations.FirstOrDefault(f => f.UserId == 2)?.State == RegistrationState.Unpaid)
+                                    {
+                                        <input type="button" class="btn btn-primary" value="Pay fee"
+                                               onclick="location.href = '@Url.Action("Pay", "Payment", new
+                                                                     {
+                                                                         registrationid = Model.EventDetail.Registrations.FirstOrDefault(f => f.EventId == Model.EventDetail.Event.Id
+                                                                         && f.UserId == 2)?.Id ?? 0,
+                                                                         eventId = Model.EventDetail.Event.Id
+                                                                     })'" />
+                                    }
+                                }
+                            </p>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="panel-heading">After event</div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <dl class="dl-horizontal">
+                                <dt>
+                                    @Html.DisplayNameFor(model => model.EventDetail.AverageRating)
+                                </dt>
+                                <dd>
+                                    @($"{Model.EventDetail.AverageRating:0.0}") / 5 (@Model.EventDetail.Reviews.Count() review(s))
+                                </dd>
+                            </dl>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    @if (Model.EventDetail.IsEnded)
+    {
+        <div class="row">
+            <h4 class="row col-md-9">User reviews:</h4>
+            @{
+                foreach (var review in Model.EventDetail.Reviews)
+                {
+                    <div class="col-md-9 top-buffer-small  list-group-item-nonclickable">
+
+                        @if (review.Rating >= 4.0)
+                    {
+                            <h3>
+                                <strong class="text-success">@review.Rating</strong> / 5
+                            </h3>
+                        }
+                        else
+                        {
+                            if (review.Rating >= 2.0)
+                            {
+                                <h3>
+                                    <strong class="text-warning">@review.Rating</strong> / 5
+                                </h3>
+                            }
+                            else
+                            {
+                                <h3>
+                                    <strong class="text-danger">@review.Rating</strong> / 5
+                                </h3>
+                            }
+                        }
+
+                        @{
+                            if (!string.IsNullOrEmpty(review.Review))
+                            {
+                                <div class="row">
+                                    <p class="text col-sm-12">
+                                        <strong>@Html.DisplayFor(arg => review.Author)</strong>: <i>"@Html.DisplayFor(arg => review.Review)"</i>
+                                    </p>
+                                </div>
+                            }
+                        }
+                    </div>
+                            }
+            }
+        </div>
+                            }
+    <div>
+        <p>
+            @Html.ActionLink("Edit", "Edit", new { id = Model.EventDetail.Event.Id }) |
+            @Html.ActionLink("Back to List", "Index")
+        </p>
+    </div>
+</div>

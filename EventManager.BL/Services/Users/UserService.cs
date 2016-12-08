@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using AutoMapper;
 using EventManager.BL.DTOs.Filters;
 using EventManager.BL.DTOs.Registrations;
@@ -17,12 +18,14 @@ namespace EventManager.BL.Services.Users
         private readonly UserRepository _userRepository;
         private readonly UserAccountRepository _userAccountRepository;
         private readonly UserListQuery _userListQuery;
+        private readonly UserAccordingToEmailQuery _userAccordingToEmailQuery;
 
-        public UserService(UserRepository userRepository, UserAccountRepository userAccountRepository, UserListQuery userListQuery)
+        public UserService(UserRepository userRepository, UserAccountRepository userAccountRepository, UserListQuery userListQuery, UserAccordingToEmailQuery userAccordingToEmailQuery)
         {
             _userRepository = userRepository;
             _userAccountRepository = userAccountRepository;
             _userListQuery = userListQuery;
+            _userAccordingToEmailQuery = userAccordingToEmailQuery;
         }
 
         public void CreateUser(UserRegistrationDTO userDto, Guid accountId)
@@ -37,14 +40,16 @@ namespace EventManager.BL.Services.Users
             }
         }
 
-        public void UpdateUser(UserDTO userDto)
+        public Guid UpdateUser(UserDTO userDto)
         {
             using (var uow = UnitOfWorkProvider.Create())
             {
-                var user = _userRepository.GetById(userDto.Id);
+                var user = _userRepository.GetById(userDto.Id, i => i.Account);
                 Mapper.Map(userDto, user);
                 _userRepository.Update(user);
                 uow.Commit();
+
+                return user.Account.ID;
             }
         }
 
@@ -68,7 +73,11 @@ namespace EventManager.BL.Services.Users
 
         public UserDTO GetUserAccortingToEmail(string email)
         {
-            throw new NotImplementedException("Functionality will be implemented with authentication.");
+            using (UnitOfWorkProvider.Create())
+            {
+               _userAccordingToEmailQuery.Email = email;
+                return _userAccordingToEmailQuery.Execute().SingleOrDefault();
+            }
         }
 
         public IEnumerable<UserDTO> ListUsers(UserFilter filter)

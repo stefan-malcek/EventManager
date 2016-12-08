@@ -13,6 +13,7 @@ using System.Web.Http.Controllers;
 using System.Web.Http.Description;
 using EventManager.WebAPI.Areas.HelpPage.ModelDescriptions;
 using EventManager.WebAPI.Areas.HelpPage.Models;
+using EventManager.WebAPI.Areas.HelpPage.SampleGeneration;
 
 namespace EventManager.WebAPI.Areas.HelpPage
 {

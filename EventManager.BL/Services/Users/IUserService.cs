@@ -11,7 +11,7 @@ namespace EventManager.BL.Services.Users
     {
         void CreateUser(UserRegistrationDTO userDto, Guid accountId);
 
-        void UpdateUser(UserDTO userDto);
+        Guid UpdateUser(UserDTO userDto);
 
         void DeleteUser(int userId);
 

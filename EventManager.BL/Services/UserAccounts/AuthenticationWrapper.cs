@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
 using BrockAllen.MembershipReboot;
 
 namespace EventManager.BL.Services.UserAccounts
@@ -20,12 +16,13 @@ namespace EventManager.BL.Services.UserAccounts
             : base(userService)
         { }
 
-        public AuthenticationWrapper(UserAccountService<DAL.Entities.UserAccount> userService, ClaimsAuthenticationManager claimsAuthenticationManager) : base(userService, claimsAuthenticationManager) { }
+        public AuthenticationWrapper(UserAccountService<DAL.Entities.UserAccount> userService, ClaimsAuthenticationManager claimsAuthenticationManager) 
+            : base(userService, claimsAuthenticationManager) { }
 
-        //public override ClaimsPrincipal GetCurentPrincipal()
-        //{
-        //    return ClaimsPrincipal.Current;
-        //}
+        protected override ClaimsPrincipal GetCurentPrincipal()
+        {
+            return ClaimsPrincipal.Current;
+        }
 
         #region TokensManagement
         public void InitializeIssueTokenAction(Action<ClaimsPrincipal, TimeSpan?, bool?> action)
@@ -42,11 +39,6 @@ namespace EventManager.BL.Services.UserAccounts
             {
                 revokeTokenAction = action;
             }
-        }
-
-        protected override ClaimsPrincipal GetCurentPrincipal()
-        {
-            return ClaimsPrincipal.Current;
         }
 
         protected override void IssueToken(ClaimsPrincipal principal, TimeSpan? tokenLifetime = null, bool? persistentCookie = null)
@@ -79,5 +71,6 @@ namespace EventManager.BL.Services.UserAccounts
             SignOut();
         }
         #endregion
+
     }
 }

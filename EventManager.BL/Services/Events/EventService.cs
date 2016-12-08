@@ -113,7 +113,7 @@ namespace EventManager.BL.Services.Events
 
         private User GetOrganizer(int organizerId)
         {
-            var organizer = _userRepository.GetById(organizerId, x => x.EventOrganizers);
+            var organizer = _userRepository.GetById(organizerId, x => x.EventOrganizers, x => x.Account.ClaimCollection);
             if (organizer == null)
             {
                 throw new ArgumentException("Invalid pamater value.", nameof(organizerId));

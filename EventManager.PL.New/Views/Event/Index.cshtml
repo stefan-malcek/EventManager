@@ -1,0 +1,51 @@
+﻿@using System.Web.Mvc.Html
+@using X.PagedList.Mvc
+@model EventManager.PL.ViewModels.Events.EventListViewModel
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2 class="text-center">Events</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<div class="row">
+    <div class="col-md-4">
+        <div class="panel panel-primary">
+            <div class="panel-heading">Filter</div>
+            <div class="panel-body">
+                <p>Filter will be included in final version.</p>
+                <div class="col-md-12">
+                    @Html.PagedListPager(Model.Events, page => Url.Action("Index","Event", new { page }))
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8">
+        @foreach (var item in Model.Events)
+        {
+            <div class="panel panel-info">
+                <div class="panel-heading">@Html.DisplayFor(modelItem => item.Title)</div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="box">
+                                <span class="control-label">
+                                    <strong>@item.Date.Add(@item.Start)</strong>
+                                </span>
+                            </div>
+                            <div class="box">
+                                <span class="control-label">
+                                    @(@item.Description.Length >= 256 ? $"{item.Description.Substring(0, 256)}..." : item.Description)
+                                      @Html.ActionLink("Read more.", "Detail", new { id = item.Id })
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
