@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using EventManager.AccountPolicy
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -23,12 +24,12 @@
                 <ul class="nav navbar-nav navbar-left">
                     <li>@Html.ActionLink("Events", "Index", "Event")</li>
 
-                    @if (User.IsInRole("Administrator"))
+                    @if (User.IsInRole(Claims.Admin))
                     {
                         <li>@Html.ActionLink("AddressList", "Index", "Address")</li>
                         <li>@Html.ActionLink("Users", "Index", "User")</li>
                     }
-                    else if (User.IsInRole("Organizer"))
+                    else if (User.IsInRole(Claims.Organizer))
                     {
                         <li>@Html.ActionLink("AddressList", "Index", "Address")</li>
                     }
@@ -67,7 +68,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            <p class="text-muted pull-right">&copy; @DateTime.Now.Year - My ASP.NET Application</p>
         </footer>
     </div>
 

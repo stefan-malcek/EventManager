@@ -6,6 +6,7 @@ namespace EventManager.BL.DTOs.Addresses
     {
         [Required]
         [MaxLength(512)]
+        [DataType(DataType.MultilineText)]
         public string Building { get; set; }
         [Required]
         [MaxLength(256)]

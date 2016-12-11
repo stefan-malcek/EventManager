@@ -68,7 +68,6 @@
     <Compile Include="EventManagerDbInitializer.cs" />
     <Compile Include="Entities\Registration.cs" />
     <Compile Include="Entities\User.cs" />
-    <Compile Include="Enums\UserRole.cs" />
     <Compile Include="EventManagerDbContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Validation\Organizer.cs" />

@@ -93,12 +93,6 @@ namespace EventManager.PL.Controllers
                         return Redirect(returnUrl);
                     }
 
-                    //var user = UserFacade.GetUserAccordingToMail(model.Username);
-                    //if (user != null)
-                    //{
-                    //   UserFacade.SendBirthDayCouponIfPossible(User.ID);
-                    //}
-
                     return RedirectToAction("Index", "Home");
                 }
                 ModelState.AddModelError("", "Invalid Username or Password");

@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using EventManager.AccountPolicy;
 using EventManager.BL.DTOs.Addresses;
 using EventManager.BL.DTOs.Filters;
 using EventManager.BL.Facades;
 
 namespace EventManager.PL.Controllers
 {
+    [Authorize(Roles = Claims.Organizer)]
+    [Authorize(Roles = Claims.Admin)]
     public class AddressController : Controller
     {
         public EventFacade EventFacade { get; set; }

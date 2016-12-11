@@ -11,6 +11,7 @@ namespace EventManager.BL.DTOs.EventReviews
         public int Rating { get; set; }
         [Required]
         [MaxLength(65536)]
+        [DataType(DataType.MultilineText)]
         public string Review { get; set; }
     }
 }

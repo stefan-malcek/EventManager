@@ -10,13 +10,14 @@ using EventManager.PL.Helpers;
 
 namespace EventManager.PL.Controllers
 {
+    [Authorize]
     public class PaymentController : Controller
     {
         public RegistrationFacade RegistrationFacade { get; set; }
 
         public ActionResult Pay(int registrationid, int eventid)
         {
-            if (eventid <= 00 && registrationid <= 0)
+            if (eventid <= 0 && registrationid <= 0)
             {
                 return RedirectToAction("Detail", "Event", new { id = eventid });
             }
@@ -26,7 +27,6 @@ namespace EventManager.PL.Controllers
         }
 
         [HttpPost]
-        //[MultiPostAction(Name = "action", Argument = "Pay")]
         public ActionResult Pay(RegistrationDTO registrationDto)
         {
             Debug.WriteLine(registrationDto);

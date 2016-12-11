@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using Riganti.Utils.Infrastructure.EntityFramework;
-using System.Data.Entity;
+﻿using System.Data.Entity;
 using System.Data.Entity.Validation;
 using System.Diagnostics;
 using System.Linq;

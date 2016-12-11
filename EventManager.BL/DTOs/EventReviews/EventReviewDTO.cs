@@ -14,6 +14,7 @@ namespace EventManager.BL.DTOs.EventReviews
         public string Author { get; set; }
         [Required]
         [MaxLength(65536)]
+        [DataType(DataType.MultilineText)]
         public string Review { get; set; }
         [Required]
         public int EventId { get; set; }

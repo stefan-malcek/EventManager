@@ -1,4 +1,4 @@
-﻿@using System.Web.Mvc.Html
+﻿@using EventManager.AccountPolicy
 @using X.PagedList.Mvc
 @model EventManager.PL.ViewModels.Events.EventListViewModel
 
@@ -7,45 +7,119 @@
 }
 
 <h2 class="text-center">Events</h2>
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<div class="row">
-    <div class="col-md-4">
-        <div class="panel panel-primary">
-            <div class="panel-heading">Filter</div>
-            <div class="panel-body">
-                <p>Filter will be included in final version.</p>
-                <div class="col-md-12">
-                    @Html.PagedListPager(Model.Events, page => Url.Action("Index","Event", new { page }))
+@if (User.IsInRole(Claims.Admin) || User.IsInRole(Claims.Organizer))
+{
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+}
+<div class="panel panel-primary col-md-3 col-sm-4 col-xs-12">
+    <div class="panel-heading panel-head">Event filter</div>
+    @using (Html.BeginForm())
+    {
+        <div class="form-horizontal">
+            <br />
+            <div class="form-group">
+                @Html.LabelFor(model => model.Filter.Title, new { @class = "control-label col-md-4" })
+                <div class="col-md-8">
+                    @Html.EditorFor(model => model.Filter.Title, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Filter.Title, "", new { @class = "text-danger" })
                 </div>
             </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Filter.Lecturer, new { @class = "control-label col-md-4" })
+                <div class="col-md-8">
+                    @Html.EditorFor(model => model.Filter.Lecturer, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Filter.Lecturer, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <br />
+            <div class="form-group">
+                @Html.LabelFor(model => model.Filter.IsNotFull, "Not full", new { @class = "control-label col-md-4" })
+                <div class="col-md-8">
+                    @Html.CheckBoxFor(model => model.Filter.IsNotFull, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Filter.IsNotFull, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Filter.IsFree, "Is free", new { @class = "control-label col-md-4" })
+                <div class="col-md-8">
+                    @Html.CheckBoxFor(model => model.Filter.IsFree, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Filter.IsFree, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Filter.OnlyActual, "Only actual", new { @class = "control-label col-md-4" })
+                <div class="col-md-8">
+                    @Html.CheckBoxFor(model => model.Filter.OnlyActual, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Filter.OnlyActual, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <br />
+            <div class="form-group">
+                @Html.LabelFor(model => model.Filter.SortCriteria, "Sort by:", new { @class = "control-label col-md-4" })
+                <div class="col-md-8">
+                    @Html.DropDownListFor(model => model.Filter.SortCriteria, Model.AllSortCriteria, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Filter.SortCriteria, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Filter.SortAscending, "Ascending", new { @class = "control-label col-md-4" })
+                <div class="col-md-8">
+                    @Html.CheckBoxFor(model => model.Filter.SortAscending, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Filter.SortAscending, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div>
+                    <input type="button" class="btn btn-danger  col-md-offset-1 col-md-4" value="Clear" onclick="location.href = '@Url.Action("ClearFilter", "Event")'" />
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-success col-md-offset-1 col-md-5" id="btnSubmit" type="submit">Filter </button>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                @Html.PagedListPager(Model.EventsPage, page => Url.Action("Index", "Event", new { page }))
+            </div>
         </div>
-    </div>
-    <div class="col-md-8">
-        @foreach (var item in Model.Events)
-        {
-            <div class="panel panel-info">
-                <div class="panel-heading">@Html.DisplayFor(modelItem => item.Title)</div>
-                <div class="panel-body">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="box">
-                                <span class="control-label">
-                                    <strong>@item.Date.Add(@item.Start)</strong>
-                                </span>
-                            </div>
-                            <div class="box">
-                                <span class="control-label">
-                                    @(@item.Description.Length >= 256 ? $"{item.Description.Substring(0, 256)}..." : item.Description)
-                                      @Html.ActionLink("Read more.", "Detail", new { id = item.Id })
-                                </span>
-                            </div>
+    }
+</div>
+
+<div class="panel panel-default col-md-9 col-sm-8 col-xs-12">
+    @foreach (var item in Model.EventsPage)
+            {
+        <div class="panel panel-info">
+            <div class="panel-heading">@Html.DisplayFor(modelItem => item.Title)</div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="box">
+                            <span class="control-label">
+                                When: <strong>@item.Date.Add(@item.Start)</strong>
+                            </span>
+                        </div>
+                        <div class="box">
+                            <span class="control-label">
+                                Lecturer: <strong>@item.Lecturer</strong>
+                            </span>
+                        </div>
+                        <div class="box">
+                            <span class="control-label">
+                                @(@item.Description.Length >= 256 ? $"{item.Description.Substring(0, 256)}..." : item.Description)
+                                @Html.ActionLink("Read more.", "Detail", new { id = item.Id })
+                            </span>
                         </div>
                     </div>
                 </div>
             </div>
-        }
-    </div>
+        </div>
+    }
 </div>
+

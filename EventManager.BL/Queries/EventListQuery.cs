@@ -26,19 +26,19 @@ namespace EventManager.BL.Queries
                 query = query.Where(w => w.Lecturer.ToLower().Contains(Filter.Lecturer.ToLower()));
             }
 
-            if (!Filter.Date.Equals(new DateTime()))
+            if (!string.IsNullOrEmpty(Filter.Title))
             {
-                query = query.Where(w => w.Date == Filter.Date);
+                query = query.Where(w => w.Title.ToLower().Contains(Filter.Title.ToLower()));
             }
 
-            if (Filter.MinimumCapacity > 0)
+            if (Filter.IsNotFull)
             {
-                query = query.Where(w => w.Capacity >= Filter.MinimumCapacity);
+                query = query.Where(w => !w.Capacity.HasValue || w.Capacity < w.Registrations.Count);
             }
 
-            if (Filter.MaximumFee > 0)
+            if (Filter.IsFree)
             {
-                query = query.Where(w => w.Fee <= Filter.MaximumFee);
+                query = query.Where(w => w.Fee == 0);
             }
 
             if (Filter.AddressId > 0)
@@ -51,9 +51,14 @@ namespace EventManager.BL.Queries
                 query = query.Where(w => w.EventOrganizer.User.ID == Filter.UserId);
             }
 
-            if (Filter.ListOnlyActual)
+            if (Filter.OnlyActual)
             {
                 query = query.Where(w => w.Date >= DateTime.Today);
+            }
+
+            if (Filter.Rating > 0)
+            {
+                query = query.Where(w => w.EventReviews.Average(a => a.Rating) >= Filter.Rating);
             }
 
             return query.ProjectTo<EventDTO>();

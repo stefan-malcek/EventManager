@@ -1,6 +1,4 @@
-﻿using EventManager.DAL.Enums;
-using Riganti.Utils.Infrastructure.Core;
-using Riganti.Utils.Infrastructure.EntityFramework;
+﻿using Riganti.Utils.Infrastructure.Core;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -13,8 +11,6 @@ namespace EventManager.DAL.Entities
     {
         public int ID { get; set; }
         [Required]
-        //public UserRole Role { get; set; }
-        //[Required] cannot initialize db with this attribute
         public virtual UserAccount Account { get; set; }
         public virtual List<Registration> Registrations { get; set; }
         public virtual List<EventOrganizer> EventOrganizers { get; set; }

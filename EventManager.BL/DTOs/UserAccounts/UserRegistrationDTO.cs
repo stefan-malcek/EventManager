@@ -28,7 +28,7 @@ namespace EventManager.BL.DTOs.UserAccounts
 
         [Required]
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+       // [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime Birthday { get; set; }
     }
 }

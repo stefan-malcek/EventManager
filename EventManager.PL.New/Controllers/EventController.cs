@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using EventManager.AccountPolicy;
 using EventManager.BL.DTOs.Addresses;
 using EventManager.BL.DTOs.Events;
 using EventManager.BL.DTOs.Filters;
 using EventManager.BL.DTOs.Registrations;
+using EventManager.BL.DTOs.Users;
 using EventManager.BL.Facades;
 using EventManager.BL.Miscellaneous;
 using EventManager.PL.ViewModels.Events;
@@ -14,21 +16,30 @@ using X.PagedList;
 
 namespace EventManager.PL.Controllers
 {
+    [Authorize]
     public class EventController : Controller
     {
+        private readonly string filterSessionKey = "filter";
+        
         public EventFacade EventFacade { get; set; }
         public UserFacade UserFacade { get; set; }
         public RegistrationFacade RegistrationFacade { get; set; }
 
         public ActionResult Index(int page = 1)
         {
+            var filter = Session[filterSessionKey] as EventFilter ?? new EventFilter();
             var events = EventFacade.ListEvents(new EventFilter { SortCriteria = EventSortCriteria.Date }, page);
-            var eventListViewModel = new EventListViewModel
-            {
-                Events = new StaticPagedList<EventDTO>(events.ResultPageData, events.RequestedPage, EventFacade.EventPageSize, events.TotalResultCount)
-            };
 
-            return View(eventListViewModel);
+            return View(CreateEventListViewModel(events, filter));
+        }
+
+        [HttpPost]
+        public ActionResult Index(EventListViewModel model)
+        {
+            Session[filterSessionKey] = model.Filter;
+            var events = EventFacade.ListEvents(model.Filter);
+
+            return View(CreateEventListViewModel(events, model.Filter));
         }
 
         public ActionResult Detail(int id)
@@ -41,27 +52,16 @@ namespace EventManager.PL.Controllers
             var eventDetail = EventFacade.GetEventDetail(id);
             var organizer = UserFacade.GetUser(eventDetail.Event.UserId);
             var address = EventFacade.GetAddress(eventDetail.Event.AddressId);
-
-            var eventDetailViewModel = new EventDetailViewModel
-            {
-                EventDetail = eventDetail,
-                Organizer = organizer,
-                Address = address
-            };
-            return View(eventDetailViewModel);
+            
+            return View(CreateEventDetailViewModel(eventDetail, address, organizer));
         }
 
         public ActionResult Create()
         {
             var addresses = EventFacade.ListAddresses(new AddressFilter());
-            var organizers = UserFacade.ListUsers(new UserFilter());
-            var eventViewModel = new EventViewModel
-            {
-                EventData = new EventDTO(),
-                AddressList = new SelectList(addresses, "Id", "FullAddress"),
-                Organizers = new SelectList(organizers, "Id", "Id")
-            };
-            return View(eventViewModel);
+            var organizers = UserFacade.ListUsers(new UserFilter { Role = Claims.Organizer });
+
+            return View(CreateEventViewModel(new EventDTO(), addresses, organizers));
         }
 
         [HttpPost]
@@ -70,13 +70,13 @@ namespace EventManager.PL.Controllers
             if (!ModelState.IsValid)
             {
                 var addresses = EventFacade.ListAddresses(new AddressFilter());
-                var organizers = UserFacade.ListUsers(new UserFilter());
-                @event.AddressList = new SelectList(addresses, "Id", "FullAddress");
-                @event.Organizers = new SelectList(organizers, "Id", "Id");
-                return View(@event);
+                var organizers = UserFacade.ListUsers(new UserFilter { Role = Claims.Organizer });
+
+                return View(CreateEventViewModel(@event.EventData, addresses, organizers));
             }
 
             EventFacade.CreateEvent(@event.EventData);
+
             return RedirectToAction("Index");
         }
 
@@ -146,14 +146,9 @@ namespace EventManager.PL.Controllers
 
             var @event = EventFacade.GetEvent(id);
             var addresses = EventFacade.ListAddresses(new AddressFilter());
-            var organizers = UserFacade.ListUsers(new UserFilter());
-            var eventViewModel = new EventViewModel
-            {
-                EventData = @event,
-                AddressList = new SelectList(addresses, "Id", "FullAddress"),
-                Organizers = new SelectList(organizers, "Id", "Id")
-            };
-            return View(eventViewModel);
+            var organizers = UserFacade.ListUsers(new UserFilter {Role = Claims.Organizer});
+
+            return View(CreateEventViewModel(@event, addresses, organizers));
         }
 
         // POST: Address/Edit/5
@@ -174,6 +169,44 @@ namespace EventManager.PL.Controllers
             {
                 return View(@event);
             }
+        }
+
+        public ActionResult ClearFilter()
+        {
+            Session[filterSessionKey] = null;
+            return RedirectToAction(nameof(Index));
+        }
+
+        private EventViewModel CreateEventViewModel(EventDTO eventDto, IEnumerable<AddressDTO> addresses,
+            IEnumerable<UserDTO> organizers)
+        {
+            return new EventViewModel
+            {
+                EventData = eventDto,
+                AddressList = new SelectList(addresses, "Id", "FullAddress"),
+                Organizers = new SelectList(organizers, "Id", "FullName")
+            };
+        }
+
+        private EventDetailViewModel CreateEventDetailViewModel(EventDetailDTO eventDto, AddressDTO address,
+            UserDTO organizer)
+        {
+            return new EventDetailViewModel
+            {
+                EventDetail = eventDto,
+                Address = address,
+                Organizer = organizer
+            };
+        }
+
+        private EventListViewModel CreateEventListViewModel(EventPagedListResultDTO events, EventFilter filter)
+        {
+            return  new EventListViewModel
+            {
+                Filter = filter,
+                EventsPage = new StaticPagedList<EventDTO>(events.ResultPageData, events.RequestedPage, 
+                EventFacade.EventPageSize, events.TotalResultCount)
+            };
         }
     }
 }
