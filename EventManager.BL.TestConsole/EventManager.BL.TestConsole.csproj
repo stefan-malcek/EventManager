@@ -78,6 +78,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\EventManager.AccountPolicy\EventManager.AccountPolicy.csproj">
+      <Project>{138459db-29cb-435b-9141-5143beedcd8e}</Project>
+      <Name>EventManager.AccountPolicy</Name>
+    </ProjectReference>
     <ProjectReference Include="..\EventManager.BL.TestData\EventManager.BL.TestData.csproj">
       <Project>{c766935b-0cfc-4b2f-aa26-62872ffed467}</Project>
       <Name>EventManager.BL.TestData</Name>

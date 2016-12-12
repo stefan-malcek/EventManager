@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Linq;
 using Castle.Windsor;
+using EventManager.AccountPolicy;
 using EventManager.BL.Bootstrap;
 using EventManager.BL.DTOs.Filters;
+using EventManager.BL.DTOs.UserAccounts;
 using EventManager.BL.Facades;
 using EventManager.BL.Services.Addresses;
 using EventManager.BL.Services.Events;
 using EventManager.BL.Services.Registrations;
 using EventManager.BL.Services.Reviews;
+using EventManager.BL.Services.UserAccounts;
 using EventManager.BL.Services.Users;
 using EventManager.BL.TestData;
 using EventManager.DAL.Enums;
@@ -31,13 +34,13 @@ namespace EventManager.BL.TestConsole
             _container = new WindsorContainer();
             _container.Install(new BussinessLayerInstaller());
             AutoMapperConfig.Initialize();
+            DataWithAccountsInit.InitializeUserAccounts(_container);
 
             TestAddressService();
             TestUserService();
             TestEventService();
             TestReviewService();
             TestRegistrationService();
-            TestEventDetail();
 
             Console.ReadKey();
         }
@@ -75,7 +78,7 @@ namespace EventManager.BL.TestConsole
             //act
             var addresses = _addressService.ListAddresses(new AddressFilter());
             //assert
-            Console.WriteLine(addresses.Count() == 3);
+            Console.WriteLine(addresses.Count() == 5);
 
             Console.Write("Listing with filter - ");
             //act
@@ -94,42 +97,26 @@ namespace EventManager.BL.TestConsole
 
         private static void TestUserService()
         {
+            var userFacade = _container.Resolve<UserFacade>();
             _userService = _container.Resolve<IUserService>();
+            bool success;
 
             Console.WriteLine("\nUserService");
 
             //create
             Console.Write("Create - ");
-           // _userService.CreateUser(Factory.GetMember1());
+            userFacade.RegisterUser(Factory.GetMember(), out success);
 
             //get
-            var user = _userService.GetUser(1);
+            var user = _userService.ListUsers(new UserFilter {Role = Claims.Member}).FirstOrDefault();
             Console.WriteLine(user != null);
-
-            //update
-            Console.Write("Update - ");
-            //arrange
-            user.Role = UserRole.Administrator;
-            //act
-            _userService.UpdateUser(user);
-            //assert
-            user = _userService.GetUser(1);
-            Console.WriteLine(UserRole.Administrator == user.Role);
 
             //list
             Console.Write("Listing - ");
-            //arrange
-           // _userService.CreateUser(Factory.GetOrganizer());
             //act
-            var users = _userService.ListUsers(new UserFilter());
+            var users = _userService.ListUsers(new UserFilter {Role = Claims.Organizer});
             //assert
-            Console.WriteLine(users.Count() == 2);
-
-            Console.Write("Listing with filter - ");
-            //act
-            users = _userService.ListUsers(new UserFilter { Role = UserRole.Member });
-            //assert
-            Console.WriteLine(!users.Any());
+            Console.WriteLine(users.Count() == 1);
 
             //delete
             Console.Write("Delete - ");
@@ -150,7 +137,7 @@ namespace EventManager.BL.TestConsole
             _eventService.CreateEvent(Factory.GetEvent1());
 
             //get
-            var @event = _eventService.GetEvent(1);
+            var @event = _eventService.GetEvent(3);
             Console.WriteLine(@event != null);
 
             //update
@@ -164,7 +151,7 @@ namespace EventManager.BL.TestConsole
             //act
             _eventService.UpdateEvent(@event);
             //assert
-            @event = _eventService.GetEvent(1);
+            @event = _eventService.GetEvent(3);
             Console.WriteLine(Equals(@event.Date, newDate) && Equals(@event.Lecturer, newLecturer) && @event.AddressId == 3);
 
             //list
@@ -175,20 +162,14 @@ namespace EventManager.BL.TestConsole
             //act
             var events = _eventService.ListEvents(new EventFilter());
             //assert
-            Console.WriteLine(events.TotalResultCount == 3);
-
-            Console.Write("Listing with filter - ");
-            //act
-            events = _eventService.ListEvents(new EventFilter { MaximumFee = 30 });
-            //assert
-            Console.WriteLine(events.TotalResultCount == 3);
+            Console.WriteLine(events.TotalResultCount == 6);
 
             //delete
             Console.Write("Delete - ");
             //act
-            _eventService.DeleteEvent(1);
+            _eventService.DeleteEvent(3);
             //assert
-            @event = _eventService.GetEvent(1);
+            @event = _eventService.GetEvent(3);
             Console.WriteLine(@event == null);
         }
 
@@ -208,7 +189,7 @@ namespace EventManager.BL.TestConsole
 
             Console.Write("Listing with filter - ");
             //act
-            var reviews = _reviewService.ListReviewsForEvent(2);
+            var reviews = _reviewService.ListReviewsForEvent(6);
             //assert
             Console.WriteLine(reviews.Count() == 5);
         }
@@ -219,10 +200,10 @@ namespace EventManager.BL.TestConsole
             _registrationService = _container.Resolve<IRegistrationService>();
 
             //create valid
-           // _userService.CreateUser(Factory.GetMember2());
+            // _userService.CreateUser(Factory.GetMember2());
             _registrationService.Register(Factory.GetValidRegistration());
 
-            var registration = _registrationService.GetRegistration(1);
+            var registration = _registrationService.GetRegistration(17);
 
             try
             {
@@ -231,7 +212,7 @@ namespace EventManager.BL.TestConsole
             }
             catch (InvalidOperationException ex) { }
 
-            _registrationService.Unregister(1);
+            _registrationService.Unregister(23);
 
             try
             {
@@ -242,13 +223,7 @@ namespace EventManager.BL.TestConsole
             catch (InvalidOperationException ex) { }
 
             //false
-            var isEventClosed = _registrationService.IsEnded(3);
-        }
-
-        private static void TestEventDetail()
-        {
-            _eventFacade = _container.Resolve<EventFacade>();
-            var eventDetail = _eventFacade.GetEventDetail(2);
+            var isEventClosed = _registrationService.IsEnded(9);
         }
     }
 }

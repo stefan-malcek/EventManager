@@ -3,6 +3,7 @@ using EventManager.BL.DTOs.Addresses;
 using EventManager.BL.DTOs.EventReviews;
 using EventManager.BL.DTOs.Events;
 using EventManager.BL.DTOs.Registrations;
+using EventManager.BL.DTOs.UserAccounts;
 using EventManager.BL.DTOs.Users;
 using EventManager.DAL.Enums;
 
@@ -43,39 +44,17 @@ namespace EventManager.BL.TestData
             };
         }
 
-        //public static UserCreateDTO GetMember1()
-        //{
-        //    return new UserCreateDTO
-        //    {
-        //        FirstName = "Petr",
-        //        LastName = " Had",
-        //        Birthday = new DateTime(1987, 7, 2),
-        //        Role = UserRole.Member
-        //    };
-        //}
-
-        //public static UserCreateDTO GetOrganizer()
-        //{
-        //    return
-        //        new UserCreateDTO
-        //        {
-        //            FirstName = "Jan",
-        //            LastName = "Novak",
-        //            Birthday = new DateTime(1988, 8, 4),
-        //            Role = UserRole.Organizer
-        //        };
-        //}
-
-        //public static UserCreateDTO GetMember2()
-        //{
-        //    return new UserCreateDTO
-        //    {
-        //        FirstName = "Petr",
-        //        LastName = " Had",
-        //        Birthday = new DateTime(1987, 7, 2),
-        //        Role = UserRole.Member
-        //    };
-        //}
+        public static UserRegistrationDTO GetMember()
+        {
+           return new UserRegistrationDTO
+           {
+               FirstName = "Jan",
+               LastName = "Maly",
+               Email = "janmaly@seznam.cz",
+               Birthday = new DateTime(1990,2,3),
+               Password = "123456"
+           };
+        }
 
         public static EventDTO GetEvent1()
         {
@@ -117,7 +96,7 @@ namespace EventManager.BL.TestData
                 Title = "Windows 10",
                 Description = "Basic work with operation system Windows 10.",
                 Lecturer = "Eugen Novotny",
-                Date = new DateTime(2016, 10, 1),
+                Date = new DateTime(2017, 2, 1),
                 Start = new TimeSpan(16, 30, 0),
                 End = new TimeSpan(19, 0, 0),
                 UserId = 2
@@ -128,7 +107,7 @@ namespace EventManager.BL.TestData
         {
             return new EventReviewCreateDTO
             {
-                EventId = 2,
+                EventId = 6,
                 Rating = 5,
                 Author = "User1",
                 Review = "Very good examples."
@@ -139,7 +118,7 @@ namespace EventManager.BL.TestData
         {
             return new EventReviewCreateDTO
             {
-                EventId = 2,
+                EventId = 6,
                 Rating = 5,
                 Author = "User2",
                 Review = "Very good examples."
@@ -150,7 +129,7 @@ namespace EventManager.BL.TestData
         {
             return new EventReviewCreateDTO
             {
-                EventId = 2,
+                EventId = 6,
                 Rating = 5,
                 Author = "User3",
                 Review = "Very good examples."
@@ -161,7 +140,7 @@ namespace EventManager.BL.TestData
         {
             return new EventReviewCreateDTO
             {
-                EventId = 2,
+                EventId = 6,
                 Rating = 5,
                 Author = "User4",
                 Review = "Very good examples."
@@ -172,7 +151,7 @@ namespace EventManager.BL.TestData
         {
             return new EventReviewCreateDTO
             {
-                EventId = 2,
+                EventId = 6,
                 Rating = 1,
                 Author = "User5",
                 Review = "Very bad examples."
@@ -183,8 +162,8 @@ namespace EventManager.BL.TestData
         {
             return new RegistrationCreateDTO
             {
-                EventId = 2,
-                UserId = 3
+                EventId = 9,
+                UserId = 4
             };
         }
 
@@ -192,8 +171,8 @@ namespace EventManager.BL.TestData
         {
             return new RegistrationCreateDTO
             {
-                EventId = 3,
-                UserId = 3
+                EventId = 6,
+                UserId = 4
             };
         }
     }

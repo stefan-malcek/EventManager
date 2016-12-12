@@ -3,8 +3,6 @@
     public enum EventSortCriteria
     {
         Lecturer,
-        Date,
-        Capacity,
-        Fee
+        Date
     }
 }

@@ -34,7 +34,7 @@ namespace EventManager.BL.Services.Reviews
             }
         }
 
-        public void UpdateReview(EventReviewUpdateDTO reviewDto)
+        public void UpdateReview(EventReviewDTO reviewDto)
         {
             using (var uow = UnitOfWorkProvider.Create())
             {
@@ -51,6 +51,15 @@ namespace EventManager.BL.Services.Reviews
             {
                 _eventReviewRepository.Delete(reviewId);
                 uow.Commit();
+            }
+        }
+
+        public EventReviewDTO GetReview(int reviewId)
+        {
+            using (UnitOfWorkProvider.Create())
+            {
+                var review = _eventReviewRepository.GetById(reviewId, i => i.Event);
+                return review == null ? null : Mapper.Map<EventReviewDTO>(review);
             }
         }
 

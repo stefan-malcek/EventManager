@@ -20,15 +20,6 @@ namespace EventManager.BL.Facades
         }
 
         /// <summary>
-        /// Create new user.
-        /// </summary>
-        /// <param name="userDto">user</param>
-        //public void CreateUser(UserCreateDTO userDto)
-        //{
-        //    _userService.CreateUser(userDto);
-        //}
-
-        /// <summary>
         /// Update user data.
         /// </summary>
         /// <param name="userDto">user</param>
@@ -58,16 +49,6 @@ namespace EventManager.BL.Facades
         }
 
         /// <summary>
-        /// Return user with given mail.
-        /// </summary>
-        /// <param name="mail">mail of user</param>
-        /// <returns>user</returns>
-        //public UserDTO GetUserAccordingToMail(string mail)
-        //{
-        //    return _userService.GetUserAccortingToEmail(mail);
-        //}
-
-        /// <summary>
         /// List users with given filter.
         /// </summary>
         /// <param name="filter">user filter</param>
@@ -78,11 +59,11 @@ namespace EventManager.BL.Facades
         }
 
         /// <summary>
-        /// Performs customer registration
+        /// Registers user.
         /// </summary>
-        /// <param name="registrationDto">Customer registration details</param>
-        /// <param name="success">argument that tells whether the registration was successful</param>
-        /// <returns>Registered customer account ID</returns>
+        /// <param name="registrationDto">user</param>
+        /// <param name="success">result of registration</param>
+        /// <returns>user id</returns>
         public Guid RegisterUser(UserRegistrationDTO registrationDto, out bool success)
         {
             if (_userService.GetUserAccortingToEmail(registrationDto.Email) != null)
@@ -97,10 +78,10 @@ namespace EventManager.BL.Facades
         }
 
         /// <summary>
-        /// Authenticates user with given username and password
+        /// Authenticates user.
         /// </summary>
-        /// <param name="loginDto">user login details</param>
-        /// <returns>ID of the authenticated user</returns>
+        /// <param name="loginDto">login</param>
+        /// <returns>user id</returns>
         public Guid AuthenticateUser(UserLoginDTO loginDto)
         {
             return _appUserService.AuthenticateUser(loginDto);

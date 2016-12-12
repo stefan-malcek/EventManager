@@ -165,7 +165,7 @@ namespace EventManager.BL.Facades
         /// Update review data.
         /// </summary>
         /// <param name="reviewUpdateDto">review</param>
-        public void UpdateReview(EventReviewUpdateDTO reviewUpdateDto)
+        public void UpdateReview(EventReviewDTO reviewUpdateDto)
         {
             _reviewService.UpdateReview(reviewUpdateDto);
         }
@@ -177,6 +177,11 @@ namespace EventManager.BL.Facades
         public void DeleteReview(int reviewId)
         {
             _reviewService.DeleteReview(reviewId);
+        }
+
+        public EventReviewDTO GetReview(int reviewId)
+        {
+            return _reviewService.GetReview(reviewId);
         }
 
         public IEnumerable<EventReviewDTO> ListReviewsForEvent(int id = 0)

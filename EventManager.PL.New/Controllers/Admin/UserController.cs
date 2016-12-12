@@ -10,17 +10,14 @@ namespace EventManager.PL.Controllers.Admin
     [Authorize(Roles = Claims.Admin)]
     public class UserController : Controller
     {
-        // GET: User
         public UserFacade UserFacade { get; set; }
-
-        // GET: Address
+        
         public ActionResult Index()
         {
             var users = UserFacade.ListUsers(new UserFilter());
             return View(users);
         }
 
-        // GET: Address/Edit/5
         public ActionResult Edit(int id)
         {
             if (id <= 0)
@@ -31,8 +28,7 @@ namespace EventManager.PL.Controllers.Admin
             var user = UserFacade.GetUser(id);
             return View(CreateUserViewModel(user));
         }
-
-        // POST: Address/Edit/5
+        
         [HttpPost]
         public ActionResult Edit(int id, UserDTO user)
         {
@@ -57,7 +53,7 @@ namespace EventManager.PL.Controllers.Admin
             return new UserViewModel
             {
                 User = user,
-                UserRoles = new SelectList(new[] { Claims.Member, Claims.Organizer, Claims.Admin }, user.Role)
+                UserRoles = new SelectList(new[] { Claims.Member, Claims.Organizer }, user.Role)
             };
         }
     }

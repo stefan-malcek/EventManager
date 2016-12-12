@@ -76,11 +76,10 @@
     <Compile Include="AppEfConfiguration\AppQuery.cs" />
     <Compile Include="AppEfConfiguration\AppUnitOfWork.cs" />
     <Compile Include="AppEfConfiguration\AppUnitOfWorkProvider.cs" />
-    <Compile Include="Bootstrap\UserAccountInit.cs" />
+    <Compile Include="Bootstrap\DataWithAccountsInit.cs" />
     <Compile Include="DTOs\Addresses\AddressCreateDTO.cs" />
     <Compile Include="DTOs\Addresses\AddressDTO.cs" />
     <Compile Include="DTOs\EventReviews\EventReviewDTO.cs" />
-    <Compile Include="DTOs\EventReviews\EventReviewUpdateDTO.cs" />
     <Compile Include="DTOs\Events\EventDTO.cs" />
     <Compile Include="DTOs\Events\EventDetailDTO.cs" />
     <Compile Include="DTOs\EventReviews\EventReviewCreateDTO.cs" />

@@ -17,7 +17,7 @@ namespace EventManager.BL.DTOs.Events
         [MaxLength(128)]
         public string Lecturer { get; set; }
         [Required]
-        [DataType(DataType.Date)]
+       // [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}", ApplyFormatInEditMode = true)]
         public DateTime Date { get; set; } = DateTime.Today;
         [Required]

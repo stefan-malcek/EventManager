@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using EventManager.AccountPolicy;
 using EventManager.BL.DTOs.Addresses;
@@ -56,6 +54,7 @@ namespace EventManager.PL.Controllers
             return View(CreateEventDetailViewModel(eventDetail, address, organizer));
         }
 
+        [Authorize(Roles = Claims.Organizer + ", " + Claims.Admin)]
         public ActionResult Create()
         {
             var addresses = EventFacade.ListAddresses(new AddressFilter());
@@ -65,6 +64,7 @@ namespace EventManager.PL.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = Claims.Organizer + ", " + Claims.Admin)]
         public ActionResult Create(EventViewModel @event)
         {
             if (!ModelState.IsValid)
@@ -78,20 +78,6 @@ namespace EventManager.PL.Controllers
             EventFacade.CreateEvent(@event.EventData);
 
             return RedirectToAction("Index");
-        }
-
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
         }
 
         [Authorize]
@@ -110,9 +96,9 @@ namespace EventManager.PL.Controllers
                     UserId = userid
                 });
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                //TODO log
+               
             }
 
             return RedirectToAction("Detail", new { id = eventid });
@@ -137,6 +123,7 @@ namespace EventManager.PL.Controllers
             return RedirectToAction("Detail", new { id = eventid });
         }
 
+        [Authorize(Roles = Claims.Organizer + ", " + Claims.Admin)]
         public ActionResult Edit(int id)
         {
             if (id <= 0)
@@ -150,9 +137,9 @@ namespace EventManager.PL.Controllers
 
             return View(CreateEventViewModel(@event, addresses, organizers));
         }
-
-        // POST: Address/Edit/5
+        
         [HttpPost]
+        [Authorize(Roles = Claims.Organizer + ", " + Claims.Admin)]
         public ActionResult Edit(int id, EventViewModel @event)
         {
             if (!ModelState.IsValid)

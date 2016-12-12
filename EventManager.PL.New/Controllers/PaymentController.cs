@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Web;
+﻿using System.Diagnostics;
 using System.Web.Mvc;
 using EventManager.BL.DTOs.Registrations;
 using EventManager.BL.Facades;
-using EventManager.PL.Helpers;
 
 namespace EventManager.PL.Controllers
 {

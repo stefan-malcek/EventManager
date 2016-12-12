@@ -1,18 +1,9 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-using System.Globalization;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using System.Web;
 using System.Web.Mvc;
 using EventManager.BL.DTOs.UserAccounts;
 using EventManager.BL.Facades;
 using EventManager.PL.Helpers;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.Owin;
-using Microsoft.Owin.Security;
-using EventManager.PL.Models;
 
 namespace EventManager.PL.Controllers
 {

@@ -49,7 +49,7 @@ namespace EventManager.BL.Services.Users
                 Mapper.Map(userDto, user);
                 _userRepository.Update(user);
                 uow.Commit();
-
+                
                 return user.EventOrganizers.IsNullOrEmpty() ? user.Account.ID : new Guid();
             }
         }

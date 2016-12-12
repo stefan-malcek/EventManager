@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Security.Claims;
 using BrockAllen.MembershipReboot;
 using EventManager.AccountPolicy;
@@ -18,7 +19,7 @@ namespace EventManager.BL.Services.UserAccounts
             mCoreService = service;
         }
 
-        public Guid RegisterUserAccount(UserRegistrationDTO userRegistration, UserRole role = UserRole.Member)
+        public Guid RegisterUserAccount(UserRegistrationDTO userRegistration, string role = Claims.Member)
         {
             using (UnitOfWorkProvider.Create())
             {
@@ -26,10 +27,10 @@ namespace EventManager.BL.Services.UserAccounts
 
                 switch (role)
                 {
-                    case UserRole.Administrator:
+                    case Claims.Admin:
                         userClaims.Add(new Claim(ClaimTypes.Role, Claims.Admin));
                         break;
-                    case UserRole.Organizer:
+                    case Claims.Organizer:
                         userClaims.Add(new Claim(ClaimTypes.Role, Claims.Organizer));
                         break;
                     default:
@@ -69,19 +70,16 @@ namespace EventManager.BL.Services.UserAccounts
         {
             using (UnitOfWorkProvider.Create())
             {
-                Claim userClaim;
-                
-                switch (role)
+                var userClaim = Equals(Claims.Organizer, role)
+                    ? new Claim(ClaimTypes.Role, Claims.Organizer)
+                    : new Claim(ClaimTypes.Role, Claims.Member);
+
+                var account = mCoreService.GetByID(userAccountId);
+
+                //cannot change admin
+                if (account.ClaimCollection.Any(a => Equals(a.Value, Claims.Admin)))
                 {
-                    case Claims.Admin:
-                        userClaim = new Claim(ClaimTypes.Role, Claims.Admin);
-                        break;
-                    case Claims.Organizer:
-                        userClaim = new Claim(ClaimTypes.Role, Claims.Organizer);
-                        break;
-                    default:
-                        userClaim = new Claim(ClaimTypes.Role, Claims.Member);
-                        break;
+                    return;
                 }
 
                 mCoreService.RemoveClaim(userAccountId, ClaimTypes.Role);

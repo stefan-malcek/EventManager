@@ -7,9 +7,11 @@ namespace EventManager.BL.Services.Reviews
     {
         void AddReview(EventReviewCreateDTO reviewDto);
 
-        void UpdateReview(EventReviewUpdateDTO reviewDto);
+        void UpdateReview(EventReviewDTO reviewDto);
 
         void DeleteReview(int reviewId);
+
+        EventReviewDTO GetReview(int reviewId);
 
         IEnumerable<EventReviewDTO> ListReviewsForEvent(int eventId = 0);
     }

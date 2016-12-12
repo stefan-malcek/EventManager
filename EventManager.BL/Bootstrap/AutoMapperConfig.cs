@@ -23,10 +23,8 @@ namespace EventManager.BL.Bootstrap
 
                 config.CreateMap<AddressCreateDTO, Address>();
 
-
                 config.CreateMap<UserRegistrationDTO, UserAccount>();
                 config.CreateMap<UserRegistrationDTO, User>();
-                // config.CreateMap<UserCreateDTO, User>();
 
                 config.CreateMap<User, UserDTO>()
                     .ForMember(d => d.Id, opt => opt.MapFrom(s => s.ID))
@@ -34,7 +32,7 @@ namespace EventManager.BL.Bootstrap
                     .ForMember(dest => dest.FirstName, opts => opts.MapFrom(src => src.Account.FirstName))
                     .ForMember(dest => dest.LastName, opts => opts.MapFrom(src => src.Account.LastName))
                     .ForMember(dest => dest.Birthday, opts => opts.MapFrom(src => src.Account.Birthday))
-                     .ForMember(d => d.Role, opt => opt.MapFrom(s => s.Account.ClaimCollection.FirstOrDefault().Value))
+                    .ForMember(d => d.Role, opt => opt.MapFrom(s => s.Account.ClaimCollection.FirstOrDefault().Value))
                     .ReverseMap();
 
                 //config.CreateMap<User, UserDTO>()
@@ -59,18 +57,18 @@ namespace EventManager.BL.Bootstrap
                     .ForMember(d => d.Id, opt => opt.MapFrom(s => s.ID))
                     .ForMember(d => d.AddressId, opt => opt.MapFrom(s => s.Address.ID))
                     .ForMember(d => d.UserId, opt => opt.MapFrom(s => s.EventOrganizer.User.ID))
-                    //.ForMember(d => d.Date, opt => opt.MapFrom(s => s.Date + s.Start))
                     .ReverseMap();
 
                 //event review
                 config.CreateMap<EventReview, EventReviewDTO>()
                     .ForMember(d => d.Id, opt => opt.MapFrom(s => s.ID))
-                    .ForMember(d => d.EventId, opt => opt.MapFrom(s => s.Event.ID));
+                    .ForMember(d => d.EventId, opt => opt.MapFrom(s => s.Event.ID))
+                    .ReverseMap();
 
                 config.CreateMap<EventReviewCreateDTO, EventReview>();
 
-                config.CreateMap<EventReviewUpdateDTO, EventReview>()
-                    .ForMember(d => d.ID, opt => opt.MapFrom(s => s.Id));
+                //config.CreateMap<EventReviewUpdateDTO, EventReview>()
+                //    .ForMember(d => d.ID, opt => opt.MapFrom(s => s.Id));
 
                 //registration
                 config.CreateMap<Registration, RegistrationDTO>()
@@ -83,7 +81,6 @@ namespace EventManager.BL.Bootstrap
                 config.CreateMap<RegistrationDTO, Registration>()
                 .ForMember(d => d.ID, opt => opt.MapFrom(s => s.Id))
                 .ForMember(d => d.State, opt => opt.MapFrom(s => s.State));
-
             });
         }
     }

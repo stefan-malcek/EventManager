@@ -154,7 +154,7 @@
                 </button>
                 <h4>User reviews:</h4>
             </div>
-            
+
             @{
                 foreach (var review in Model.EventDetail.Reviews)
                 {
@@ -192,19 +192,28 @@
                                 </div>
                             }
                         }
+
+                        @if (User.IsInRole(Claims.Admin))
+                        {
+                            @Html.ActionLink("Edit review", "Edit", "Review", new { id = Model.EventDetail.Event.Id, reviewId = review.Id }, null)
+                            <br />
+                            @Html.ActionLink("Delete review", "Delete", "Review", new { id = Model.EventDetail.Event.Id, reviewId = review.Id }, null)
+                        }
+
                     </div>
                             }
             }
         </div>
                             }
-    <div>
-        <p>
-            @if (User.IsInRole(Claims.Admin) || User.IsInRole(Claims.Organizer))
-            {
-                @Html.ActionLink("Edit", "Edit", new { id = Model.EventDetail.Event.Id })
-            }
-            <br/>
-            @Html.ActionLink("Back to List", "Index")
-        </p>
-    </div>
+<div>
+    <br />
+    <p>
+        @if (User.IsInRole(Claims.Admin) || User.IsInRole(Claims.Organizer))
+        {
+            @Html.ActionLink("Edit event", "Edit", new {id = Model.EventDetail.Event.Id})
+        }
+        <br/>
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+</div>
 </div>
